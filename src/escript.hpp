@@ -24,6 +24,8 @@ public:
     cycfi::elements::element_ptr get_element(const char *id);
     template <class T> cycfi::elements::receiver<T> *get_receiver(const char *id);
     template <class T> cycfi::elements::sender<T> *get_sender(const char *id);
+    cycfi::elements::text_reader *get_text_reader(const char *id);
+    cycfi::elements::text_writer *get_text_writer(const char *id);
 
 private:
     Tcl_Interp *interp_ = nullptr;

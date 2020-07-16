@@ -124,4 +124,20 @@ template <> cycfi::elements::sender<std::string> *script_engine::get_sender(cons
     return it->second->sender_string;
 }
 
+cycfi::elements::text_reader *script_engine::get_text_reader(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->text_reader;
+}
+
+cycfi::elements::text_writer *script_engine::get_text_writer(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->text_writer;
+}
+
 } // namespace escript

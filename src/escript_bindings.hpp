@@ -22,6 +22,8 @@ struct element_obj {
     cycfi::elements::sender<int> *sender_int = nullptr;
     cycfi::elements::sender<double> *sender_double = nullptr;
     cycfi::elements::sender<std::string> *sender_string = nullptr;
+    cycfi::elements::text_reader *text_reader = nullptr;
+    cycfi::elements::text_writer *text_writer = nullptr;
 };
 
 Tcl_Obj *engine_obj_new(escript::script_engine *engine);
