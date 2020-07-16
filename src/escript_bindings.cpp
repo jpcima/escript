@@ -442,6 +442,41 @@ int cmd_vgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     return cmd_generic_image<el::vgizmo>(client_data, interp, objc, objv);
 }
 
+int cmd_sprite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    double scale = 1.0;
+    const char *filename = nullptr;
+    double height = 0.0;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_FLOAT, "-scale", nullptr, &id, "Scale factor", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    Tcl_Obj **rem = nullptr;
+    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
+        parse_positional_objv(interp, rem, TCL_ARGV_STRING, &filename, TCL_ARGV_FLOAT, &height, 0) != TCL_OK)
+    {
+        Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    auto sprite = el::share(el::sprite(filename, height, scale));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = sprite;
+    elt->receiver_int = static_cast<el::receiver<int> *>(sprite.get());
+    elt->receiver_double = static_cast<el::receiver<double> *>(sprite.get());
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
 ///
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt)
 {

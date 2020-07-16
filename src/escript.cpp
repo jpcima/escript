@@ -44,6 +44,7 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "gizmo", &cmd_gizmo, this, nullptr);
     Tcl_CreateObjCommand(interp, "hgizmo", &cmd_hgizmo, this, nullptr);
     Tcl_CreateObjCommand(interp, "vgizmo", &cmd_vgizmo, this, nullptr);
+    Tcl_CreateObjCommand(interp, "sprite", &cmd_sprite, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)
@@ -65,6 +66,14 @@ template <> cycfi::elements::receiver<bool> *script_engine::get_receiver(const c
     if (it == elements_.end())
         return {};
     return it->second->receiver_bool;
+}
+
+template <> cycfi::elements::receiver<int> *script_engine::get_receiver(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->receiver_int;
 }
 
 template <> cycfi::elements::receiver<double> *script_engine::get_receiver(const char *id)
@@ -89,6 +98,14 @@ template <> cycfi::elements::sender<bool> *script_engine::get_sender(const char 
     if (it == elements_.end())
         return {};
     return it->second->sender_bool;
+}
+
+template <> cycfi::elements::sender<int> *script_engine::get_sender(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->sender_int;
 }
 
 template <> cycfi::elements::sender<double> *script_engine::get_sender(const char *id)

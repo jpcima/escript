@@ -15,9 +15,11 @@ extern Tcl_ObjType element_obj_type;
 struct element_obj {
     cycfi::elements::element_ptr element;
     cycfi::elements::receiver<bool> *receiver_bool = nullptr;
+    cycfi::elements::receiver<int> *receiver_int = nullptr;
     cycfi::elements::receiver<double> *receiver_double = nullptr;
     cycfi::elements::receiver<std::string> *receiver_string = nullptr;
     cycfi::elements::sender<bool> *sender_bool = nullptr;
+    cycfi::elements::sender<int> *sender_int = nullptr;
     cycfi::elements::sender<double> *sender_double = nullptr;
     cycfi::elements::sender<std::string> *sender_string = nullptr;
 };
@@ -47,6 +49,7 @@ int cmd_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *con
 int cmd_gizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_hgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_vgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_sprite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt);
 uint32_t lookup_icon(cycfi::string_view name);
