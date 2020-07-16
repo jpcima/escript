@@ -379,6 +379,16 @@ int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *
     return cmd_generic_proxy_2f<el::max_size_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
 }
 
+int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_2f<el::margin_element<el::xside_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_yside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_2f<el::margin_element<el::yside_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
 ///
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt)
 {

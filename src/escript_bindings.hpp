@@ -41,6 +41,8 @@ int cmd_right_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
 int cmd_bottom_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_min_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_yside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt);
 uint32_t lookup_icon(cycfi::string_view name);
