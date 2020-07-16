@@ -389,6 +389,59 @@ int cmd_yside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
     return cmd_generic_proxy_2f<el::margin_element<el::yside_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
 }
 
+template <class T>
+int cmd_generic_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    double scale = 1.0;
+    const char *filename = nullptr;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_FLOAT, "-scale", nullptr, &id, "Scale factor", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    Tcl_Obj **rem = nullptr;
+    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
+        parse_positional_objv(interp, rem, TCL_ARGV_STRING, &filename, 0) != TCL_OK)
+    {
+        Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    auto image = el::share(T(filename, scale));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = image;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+int cmd_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_image<el::image>(client_data, interp, objc, objv);
+}
+
+int cmd_gizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_image<el::gizmo>(client_data, interp, objc, objv);
+}
+
+int cmd_hgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_image<el::hgizmo>(client_data, interp, objc, objv);
+}
+
+int cmd_vgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_image<el::vgizmo>(client_data, interp, objc, objv);
+}
+
 ///
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt)
 {

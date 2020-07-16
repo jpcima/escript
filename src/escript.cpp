@@ -40,6 +40,10 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "max_size", &cmd_max_size, this, nullptr);
     Tcl_CreateObjCommand(interp, "xside_margin", &cmd_xside_margin, this, nullptr);
     Tcl_CreateObjCommand(interp, "yside_margin", &cmd_yside_margin, this, nullptr);
+    Tcl_CreateObjCommand(interp, "image", &cmd_image, this, nullptr);
+    Tcl_CreateObjCommand(interp, "gizmo", &cmd_gizmo, this, nullptr);
+    Tcl_CreateObjCommand(interp, "hgizmo", &cmd_hgizmo, this, nullptr);
+    Tcl_CreateObjCommand(interp, "vgizmo", &cmd_vgizmo, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)
