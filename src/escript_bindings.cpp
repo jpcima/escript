@@ -290,6 +290,26 @@ int cmd_vsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *con
     return cmd_generic_proxy_1f<el::vsize_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
 }
 
+int cmd_hmin_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::hmin_size_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_vmin_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::vmin_size_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_hmax_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::hmax_size_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+//int cmd_vmax_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+//{
+//    return cmd_generic_proxy_1f<el::vmax_size_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+//}
+
 ///
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt)
 {
