@@ -25,6 +25,7 @@ struct element_obj {
 Tcl_Obj *engine_obj_new(escript::script_engine *engine);
 
 int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_htile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_vtile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt);

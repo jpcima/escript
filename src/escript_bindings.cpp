@@ -185,6 +185,42 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     return TCL_OK;
 }
 
+int cmd_htile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    Tcl_Obj **rem = nullptr;
+    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"htile: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    auto composite = el::share(el::htile_composite());
+    for (Tcl_Obj **p = rem + 1; *p; ++p) {
+        Tcl_Obj *item = *p;
+        element_obj *elt = reinterpret_cast<element_obj *>(item->internalRep.twoPtrValue.ptr1);
+        if (item->typePtr != &element_obj_type) {
+            Tcl_SetResult(interp, (char *)"htile: the item is not of type ELEMENT", TCL_STATIC);
+            return TCL_ERROR;
+        }
+        composite->push_back(elt->element);
+    }
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = composite;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
 int cmd_vtile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
