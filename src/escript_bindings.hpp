@@ -29,6 +29,8 @@ int cmd_htile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *con
 int cmd_vtile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_layer(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_deck(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_hsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_vsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt);
 uint32_t lookup_icon(cycfi::string_view name);

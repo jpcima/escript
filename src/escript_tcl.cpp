@@ -16,6 +16,14 @@ int parse_positional_objv(Tcl_Interp *interp, Tcl_Obj **objv, ...)
     int argtype;
     while ((argtype = va_arg(ap, int))) {
         switch (argtype) {
+        case ESCRIPT_ARGV_OBJ:
+            if (!objv[index]) {
+                va_end(ap);
+                return TCL_ERROR;
+            }
+            *va_arg(ap, Tcl_Obj **) = objv[index];
+            ++index;
+            break;
         case TCL_ARGV_STRING:
             {
                 const char *str = nullptr;

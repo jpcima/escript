@@ -242,6 +242,54 @@ int cmd_deck(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *cons
     return cmd_generic_composite<el::deck_composite>(client_data, interp, objc, objv);
 }
 
+template <class T>
+int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    double coord = 0.0;
+    Tcl_Obj *subject = nullptr;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    Tcl_Obj **rem = nullptr;
+    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
+        parse_positional_objv(interp, rem, TCL_ARGV_FLOAT, &coord, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK)
+    {
+        Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    if (subject->typePtr != &element_obj_type) {
+        Tcl_SetResult(interp, (char *)"proxy: the item is not of type ELEMENT", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
+    auto proxy = el::share(T(coord, el::hold(subject_elt->element)));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = proxy;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+int cmd_hsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::hsize_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_vsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::vsize_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
 ///
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt)
 {

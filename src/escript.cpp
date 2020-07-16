@@ -26,6 +26,8 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "vtile", &cmd_vtile, this, nullptr);
     Tcl_CreateObjCommand(interp, "layer", &cmd_layer, this, nullptr);
     Tcl_CreateObjCommand(interp, "deck", &cmd_deck, this, nullptr);
+    Tcl_CreateObjCommand(interp, "hsize", &cmd_hsize, this, nullptr);
+    Tcl_CreateObjCommand(interp, "vsize", &cmd_vsize, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)
