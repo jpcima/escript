@@ -32,6 +32,8 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "vmin_size", &cmd_vmin_size, this, nullptr);
     Tcl_CreateObjCommand(interp, "hmax_size", &cmd_hmax_size, this, nullptr);
     //Tcl_CreateObjCommand(interp, "vmax_size", &cmd_vmax_size, this, nullptr);
+    Tcl_CreateObjCommand(interp, "min_size", &cmd_min_size, this, nullptr);
+    Tcl_CreateObjCommand(interp, "max_size", &cmd_max_size, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)
