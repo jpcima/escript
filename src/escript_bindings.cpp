@@ -242,7 +242,7 @@ int cmd_deck(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *cons
     return cmd_generic_composite<el::deck_composite>(client_data, interp, objc, objv);
 }
 
-template <class T>
+template <class T, class Coord = float>
 int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
@@ -268,7 +268,7 @@ int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, T
     }
 
     element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-    auto proxy = el::share(T(coord, el::hold(subject_elt->element)));
+    auto proxy = el::share(T(Coord(coord), el::hold(subject_elt->element)));
 
     Tcl_Obj *result = element_obj_new();
     element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
@@ -310,7 +310,27 @@ int cmd_hmax_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj 
 //    return cmd_generic_proxy_1f<el::vmax_size_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
 //}
 
-template <class T>
+int cmd_left_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::margin_element<el::left_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_top_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::margin_element<el::top_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_right_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::margin_element<el::right_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_bottom_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::margin_element<el::bottom_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+template <class T, class Coord = float>
 int cmd_generic_proxy_2f(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
@@ -337,7 +357,7 @@ int cmd_generic_proxy_2f(ClientData client_data, Tcl_Interp *interp, int objc, T
     }
 
     element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-    auto proxy = el::share(T({static_cast<float>(coord1), static_cast<float>(coord2)}, el::hold(subject_elt->element)));
+    auto proxy = el::share(T({Coord(coord1), Coord(coord2)}, el::hold(subject_elt->element)));
 
     Tcl_Obj *result = element_obj_new();
     element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);

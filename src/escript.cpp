@@ -32,6 +32,10 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "vmin_size", &cmd_vmin_size, this, nullptr);
     Tcl_CreateObjCommand(interp, "hmax_size", &cmd_hmax_size, this, nullptr);
     //Tcl_CreateObjCommand(interp, "vmax_size", &cmd_vmax_size, this, nullptr);
+    Tcl_CreateObjCommand(interp, "left_margin", &cmd_left_margin, this, nullptr);
+    Tcl_CreateObjCommand(interp, "top_margin", &cmd_top_margin, this, nullptr);
+    Tcl_CreateObjCommand(interp, "right_margin", &cmd_right_margin, this, nullptr);
+    Tcl_CreateObjCommand(interp, "bottom_margin", &cmd_bottom_margin, this, nullptr);
     Tcl_CreateObjCommand(interp, "min_size", &cmd_min_size, this, nullptr);
     Tcl_CreateObjCommand(interp, "max_size", &cmd_max_size, this, nullptr);
 }
