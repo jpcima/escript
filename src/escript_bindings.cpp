@@ -1,6 +1,7 @@
 #include "escript_bindings.hpp"
 #include "escript.hpp"
 #include <elements.hpp>
+#include <unordered_map>
 #include <sstream>
 namespace el = cycfi::elements;
 
@@ -126,6 +127,7 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     double size = 1.0;
     const char *icon = nullptr;
     const char *icon_pos = nullptr;
+    const char *body_color = nullptr;
     const char *text = nullptr;
 
     const Tcl_ArgvInfo info[] = {
@@ -133,6 +135,7 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         {TCL_ARGV_FLOAT, "-size", nullptr, &size, "Size", nullptr},
         {TCL_ARGV_STRING, "-icon", nullptr, &icon, "Icon", nullptr},
         {TCL_ARGV_STRING, "-icon_pos", nullptr, &icon_pos, "Icon position", nullptr},
+        {TCL_ARGV_STRING, "-body_color", nullptr, &body_color, "Body color", nullptr},
         TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
     };
 
@@ -159,10 +162,19 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         return TCL_ERROR;
     }
 
+    el::color body_color_code;
+    if (body_color) {
+        if (!parse_color(body_color, body_color_code)) {
+            Tcl_SetResult(interp, (char *)"button: invalid body color code", TCL_STATIC);
+            return TCL_ERROR;
+        }
+    } else
+        body_color_code = el::get_theme().default_button_color;
+
     auto button = icon ? ((icon_pos_code == 1) ?
-                          el::share(el::button(icon_code, text, size)) :
-                          el::share(el::button(text, icon_code, size))) :
-        el::share(el::button(text, size));
+                          el::share(el::button(icon_code, text, size, body_color_code)) :
+                          el::share(el::button(text, icon_code, size, body_color_code))) :
+        el::share(el::button(text, size, body_color_code));
     elt->element = button;
 
     elt->receiver_bool = static_cast<el::receiver<bool> *>(button.get());
@@ -279,6 +291,41 @@ uint32_t lookup_icon(cycfi::string_view name)
 uint32_t lookup_icon_pos(cycfi::string_view name)
 {
     return (name == "left") ? 1 : (name == "right") ? 2 : 0;
+}
+
+static int hex_digit_from_char(char c)
+{
+    return (c >= '0' && c <= '9') ? (c - '0') :
+        (c >= 'a' && c <= 'z') ? (c - 'a' + 10) :
+        (c >= 'A' && c <= 'Z') ? (c - 'A' + 10) : -1;
+}
+
+bool parse_color(cycfi::string_view name, cycfi::elements::color &color)
+{
+    if (name.empty() || name[0] != '#')
+        return false;
+
+    name = name.substr(1);
+    size_t length = name.size();
+
+    uint32_t rgba = 0;
+    if (length == 6 || length == 8) {
+        for (size_t i = 0; i < length; ++i) {
+            int d = hex_digit_from_char(name[i]);
+            if (d == -1)
+                return false;
+            rgba = (rgba << 4) | d;
+        }
+    }
+    if (length == 6)
+        rgba = (rgba << 8) | 0xff;
+
+    color.red = (rgba >> 24) / 255.0;
+    color.green = ((rgba >> 16) & 0xff) / 255.0;
+    color.blue = ((rgba >> 8) & 0xff) / 255.0;
+    color.alpha = (rgba & 0xff) / 255.0;
+
+    return true;
 }
 
 } // namespace escript

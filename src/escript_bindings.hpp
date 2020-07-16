@@ -28,5 +28,6 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
 
 uint32_t lookup_icon(cycfi::string_view name);
 uint32_t lookup_icon_pos(cycfi::string_view name);
+bool parse_color(cycfi::string_view name, cycfi::elements::color &color);
 
 } // namespace escript
