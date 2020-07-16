@@ -1,4 +1,5 @@
 #include <elements.hpp>
+#include <elements/support/resource_paths.hpp>
 #include <escript.hpp>
 #include <iostream>
 namespace el = cycfi::elements;
@@ -19,7 +20,14 @@ int main(int argc, char *argv[])
     engine.init();
 
     ///
-    int err = Tcl_Eval(interp, "hsize -id main 800 [vtile [button -size 2.0 -icon left -icon_pos right -body_color #337700 {Hello World}] [top_margin 20 [button {Other}]]]");
+    const std::string script_path = el::find_file("script.tcl");
+    if (script_path.empty()) {
+        std::cerr << "Cannot find the script file.\n";
+        return 1;
+    }
+
+    ///
+    int err = Tcl_EvalFile(interp, script_path.c_str());
     Tcl_Obj *result = Tcl_GetObjResult(interp);
     std::cout << "Result(" << err << "): " << Tcl_GetString(result) << "\n";
 
