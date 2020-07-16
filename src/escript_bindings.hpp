@@ -1,6 +1,7 @@
 #pragma once
 #include "escript_tcl.hpp"
 #include "escript_elements_fwd.hpp"
+#include <infra/string_view.hpp>
 #include <string>
 #include <memory>
 
@@ -24,5 +25,8 @@ struct element_obj {
 Tcl_Obj *engine_obj_new(escript::script_engine *engine);
 
 int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+
+uint32_t lookup_icon(cycfi::string_view name);
+uint32_t lookup_icon_pos(cycfi::string_view name);
 
 } // namespace escript

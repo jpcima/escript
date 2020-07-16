@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     engine.init();
 
     ///
-    int err = Tcl_Eval(interp, "button -id main {Hello World}");
+    int err = Tcl_Eval(interp, "button -id main -size 2.0 -icon left -icon_pos right {Hello World}");
     Tcl_Obj *result = Tcl_GetObjResult(interp);
     std::cout << "Result(" << err << "): " << Tcl_GetString(result) << "\n";
 
