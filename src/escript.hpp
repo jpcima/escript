@@ -22,6 +22,8 @@ public:
     void register_element(const char *id, const element_obj &elt);
 
     cycfi::elements::element_ptr get_element(const char *id);
+    template <class T> cycfi::elements::receiver<T> *get_receiver(const char *id);
+    template <class T> cycfi::elements::sender<T> *get_sender(const char *id);
 
 private:
     Tcl_Interp *interp_ = nullptr;

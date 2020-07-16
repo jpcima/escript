@@ -37,4 +37,52 @@ cycfi::elements::element_ptr script_engine::get_element(const char *id)
     return it->second->element;
 }
 
+template <> cycfi::elements::receiver<bool> *script_engine::get_receiver(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->receiver_bool;
+}
+
+template <> cycfi::elements::receiver<double> *script_engine::get_receiver(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->receiver_double;
+}
+
+template <> cycfi::elements::receiver<std::string> *script_engine::get_receiver(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->receiver_string;
+}
+
+template <> cycfi::elements::sender<bool> *script_engine::get_sender(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->sender_bool;
+}
+
+template <> cycfi::elements::sender<double> *script_engine::get_sender(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->sender_double;
+}
+
+template <> cycfi::elements::sender<std::string> *script_engine::get_sender(const char *id)
+{
+    auto it = elements_.find(id);
+    if (it == elements_.end())
+        return {};
+    return it->second->sender_string;
+}
+
 } // namespace escript
