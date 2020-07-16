@@ -22,6 +22,7 @@ void script_engine::init()
     Tcl_RegisterObjType(&element_obj_type);
 
     Tcl_CreateObjCommand(interp, "button", &cmd_button, this, nullptr);
+    Tcl_CreateObjCommand(interp, "vtile", &cmd_vtile, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)

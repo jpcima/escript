@@ -147,9 +147,6 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         return TCL_ERROR;
     }
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-
     uint32_t icon_code = 0;
     if (icon && !(icon_code = lookup_icon(icon))) {
         Tcl_SetResult(interp, (char *)"button: invalid icon code", TCL_STATIC);
@@ -175,24 +172,68 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
                           el::share(el::button(icon_code, text, size, body_color_code)) :
                           el::share(el::button(text, icon_code, size, body_color_code))) :
         el::share(el::button(text, size, body_color_code));
-    elt->element = button;
 
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = button;
     elt->receiver_bool = static_cast<el::receiver<bool> *>(button.get());
     elt->sender_bool = static_cast<el::sender<bool> *>(button.get());
-
     Tcl_InvalidateStringRep(result);
-
-    if (id) {
-        Tcl_Obj *escript = Tcl_GetVar2Ex(interp, "*escript*", nullptr, TCL_GLOBAL_ONLY);
-        if (escript && escript->typePtr == &engine_obj_type) {
-            escript::script_engine *eng = reinterpret_cast<escript::script_engine *>(
-                escript->internalRep.twoPtrValue.ptr1);
-            eng->register_element(id, *elt);
-        }
-    }
+    register_element(interp, id, *elt);
 
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
+}
+
+int cmd_vtile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    Tcl_Obj **rem = nullptr;
+    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"vtile: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    auto composite = el::share(el::vtile_composite());
+    for (Tcl_Obj **p = rem + 1; *p; ++p) {
+        Tcl_Obj *item = *p;
+        element_obj *elt = reinterpret_cast<element_obj *>(item->internalRep.twoPtrValue.ptr1);
+        if (item->typePtr != &element_obj_type) {
+            Tcl_SetResult(interp, (char *)"vtile: the item is not of type ELEMENT", TCL_STATIC);
+            return TCL_ERROR;
+        }
+        composite->push_back(elt->element);
+    }
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = composite;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+///
+void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt)
+{
+    if (!id)
+        return;
+
+    Tcl_Obj *escript = Tcl_GetVar2Ex(interp, "*escript*", nullptr, TCL_GLOBAL_ONLY);
+    if (!escript || escript->typePtr != &engine_obj_type)
+        return;
+
+    escript::script_engine *eng = reinterpret_cast<escript::script_engine *>(
+        escript->internalRep.twoPtrValue.ptr1);
+    eng->register_element(id, elt);
 }
 
 uint32_t lookup_icon(cycfi::string_view name)
