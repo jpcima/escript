@@ -41,6 +41,11 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-vertical} @*
 @end deffn
 
+@deffn Command slider thumb track
+@strong{-id} @emph{identifier} @*
+@strong{-init_value} @emph{init_value} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Image
 @unnumbered Image
