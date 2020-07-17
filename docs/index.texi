@@ -1,0 +1,146 @@
+\input texinfo
+@settitle escript
+
+@c -----------------------------------------------------------------------------
+@ifnottex
+@node Top
+@top Command reference
+
+This manual is for escript documentation using the Tcl script language.
+@end ifnottex
+
+@menu
+* Controls:: Control commands
+* Image:: Image commands
+* Layout:: Layout commands
+* Size:: Size commands
+* Margin:: Margin commands
+* Index::  Complete index
+@end menu
+
+@c -----------------------------------------------------------------------------
+@node Controls
+@unnumbered Controls
+
+@deffn Command button text
+@strong{-id} @emph{identifier} @*
+@strong{-size} @emph{size} @*
+@strong{-icon} @emph{icon} @*
+@strong{-icon_pos} @emph{icon_pos} @*
+@strong{-body_color} @emph{body_color} @*
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@node Image
+@unnumbered Image
+
+@deffn Command image filename
+@strong{-id} @emph{identifier} @*
+@strong{-scale} @emph{scale} @*
+@end deffn
+
+@deffn Command gizmo filename
+@strong{-id} @emph{identifier} @*
+@strong{-scale} @emph{scale} @*
+@end deffn
+
+@deffn Command hgizmo filename
+@strong{-id} @emph{identifier} @*
+@strong{-scale} @emph{scale} @*
+@end deffn
+
+@deffn Command vgizmo filename
+@strong{-id} @emph{identifier} @*
+@strong{-scale} @emph{scale} @*
+@end deffn
+
+@deffn Command sprite filename height
+@strong{-id} @emph{identifier} @*
+@strong{-scale} @emph{scale} @*
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@node Layout
+@unnumbered Layout
+
+@deffn Command htile elements...
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command vtile elements...
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command layer elements...
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command deck elements...
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@node Size
+@unnumbered Size
+
+@deffn Command hsize width
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command vsize width
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command hmin_size width
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command hmax_size width
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command min_size width height
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command max_size width height
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@c -----------------------------------------------------------------------------
+@node Margin
+@unnumbered Margin
+
+@deffn Command left_margin left
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command top_margin top
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command right_margin right
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command bottom_margin bottom
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command xside_margin left right
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command yside_margin top bottom
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+
+@c -----------------------------------------------------------------------------
+@node Index
+@unnumbered Index
+
+@printindex fn
+
+@c -----------------------------------------------------------------------------
+@bye
