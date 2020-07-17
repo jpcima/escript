@@ -48,6 +48,7 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "basic_thumb", &cmd_basic_thumb, this, nullptr);
     Tcl_CreateObjCommand(interp, "basic_track", &cmd_basic_track, this, nullptr);
     Tcl_CreateObjCommand(interp, "slider", &cmd_slider, this, nullptr);
+    Tcl_CreateObjCommand(interp, "slider_marks", &cmd_slider_marks, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)

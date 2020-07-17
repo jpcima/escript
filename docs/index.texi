@@ -46,6 +46,12 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-init_value} @emph{init_value} @*
 @end deffn
 
+@deffn Command slider_marks size subject
+@strong{-id} @emph{identifier} @*
+@strong{-num_divs} @emph{num_divs} @*
+@strong{-major_divs} @emph{major_divs} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Image
 @unnumbered Image

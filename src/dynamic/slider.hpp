@@ -10,6 +10,7 @@
 
 namespace dynamic { namespace elements {
 
+   using namespace cycfi;
    using namespace cycfi::elements;
 
    ////////////////////////////////////////////////////////////////////////////
@@ -99,6 +100,121 @@ namespace dynamic { namespace elements {
    basic_track(unsigned size, bool vertical = false, color c = colors::black)
    {
       return {size, vertical, c};
+   }
+
+   ////////////////////////////////////////////////////////////////////////////
+   // Slider Element Base (common base class for slider elements)
+   ////////////////////////////////////////////////////////////////////////////
+   template <typename Subject>
+   class slider_element_base : public proxy<Subject>
+   {
+   public:
+
+      using base_type = proxy<Subject>;
+
+                              slider_element_base(Subject subject, unsigned size);
+
+      view_limits             limits(basic_context const& ctx) const override;
+      void                    prepare_subject(context& ctx) override;
+
+   protected:
+
+      unsigned                _size;
+   };
+
+   template <typename Subject>
+   slider_element_base<Subject>::slider_element_base(Subject subject, unsigned size)
+      : base_type(std::move(subject)), _size(size)
+   {
+   }
+
+   template <typename Subject>
+   inline view_limits
+   slider_element_base<Subject>::limits(basic_context const& ctx) const
+   {
+      auto sl = this->subject().limits(ctx);
+      if (sl.min.x < sl.min.y) // is vertical?
+      {
+         sl.min.x += _size;
+         sl.max.x += _size;
+         clamp_max(sl.max.x, full_extent);
+      }
+      else
+      {
+         sl.min.y += _size;
+         sl.max.y += _size;
+         clamp_max(sl.max.y, full_extent);
+      }
+      return sl;
+   }
+
+   template <typename Subject>
+   inline void
+   slider_element_base<Subject>::prepare_subject(context& ctx)
+   {
+      if (ctx.bounds.width() < ctx.bounds.height()) // is vertical?
+      {
+         ctx.bounds.left += _size/2;
+         ctx.bounds.right -= _size/2;
+      }
+      else
+      {
+         ctx.bounds.top += _size/2;
+         ctx.bounds.bottom -= _size/2;
+      }
+   }
+
+   ////////////////////////////////////////////////////////////////////////////
+   // Slider Marks (You can use this to place tick marks on slider)
+   ////////////////////////////////////////////////////////////////////////////
+   template <typename Subject>
+   class slider_marks_element : public slider_element_base<Subject>
+   {
+   public:
+
+                              slider_marks_element(
+                                 Subject subject, std::size_t size,
+                                 std::size_t num_divs, std::size_t major_divs);
+
+      using base_type = slider_element_base<Subject>;
+
+      void                    draw(context const& ctx) override;
+
+   private:
+
+      std::size_t             _num_divs;
+      std::size_t             _major_divs;
+   };
+
+   template <typename Subject>
+   slider_marks_element<Subject>::
+   slider_marks_element(Subject subject, std::size_t size,
+                        std::size_t num_divs, std::size_t major_divs)
+      : base_type(std::move(subject), size)
+      , _num_divs(num_divs), _major_divs(major_divs)
+   {
+   }
+
+   template <typename Subject>
+   inline void
+   slider_marks_element<Subject>
+      ::draw(context const& ctx)
+   {
+      // Draw linear lines
+      draw_slider_marks(
+         ctx.canvas, ctx.bounds, base_type::_size, _num_divs
+       , _major_divs, colors::light_gray);
+
+      // Draw the subject
+      base_type::draw(ctx);
+   }
+
+   template <typename Subject>
+   inline slider_marks_element<remove_cvref_t<Subject>>
+   slider_marks(Subject&& subject, std::size_t _size,
+                std::size_t _num_divs = 50, std::size_t _major_divs = 10)
+   {
+      return {std::forward<Subject>(subject), _size, _num_divs, _major_divs};
    }
 
 } // namespace elements

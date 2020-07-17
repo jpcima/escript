@@ -303,6 +303,45 @@ int cmd_slider(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     return TCL_OK;
 }
 
+int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    Tcl_Obj *subject = nullptr;
+    int size = 0;
+    int num_divs = 50;
+    int major_divs = 10;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_INT, "-num_divs", nullptr, &num_divs, "Number of divisions", nullptr},
+        {TCL_ARGV_INT, "-major_divs", nullptr, &major_divs, "Number of major divisions", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"slider_marks: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    if (subject->typePtr != &element_obj_type) {
+        Tcl_SetResult(interp, (char *)"slider_marks: the subject is not of type ELEMENT", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    element_obj *elt_subject = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
+
+    auto slider_marks = el::share(dy::slider_marks(el::hold(elt_subject->element), size, num_divs, major_divs));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = slider_marks;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
 template <class T>
 int cmd_generic_composite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
