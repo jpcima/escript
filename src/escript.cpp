@@ -21,43 +21,7 @@ void script_engine::init()
     Tcl_RegisterObjType(&engine_obj_type);
     Tcl_RegisterObjType(&element_obj_type);
 
-    Tcl_CreateObjCommand(interp, "button", &cmd_button, this, nullptr);
-    Tcl_CreateObjCommand(interp, "htile", &cmd_htile, this, nullptr);
-    Tcl_CreateObjCommand(interp, "vtile", &cmd_vtile, this, nullptr);
-    Tcl_CreateObjCommand(interp, "layer", &cmd_layer, this, nullptr);
-    Tcl_CreateObjCommand(interp, "deck", &cmd_deck, this, nullptr);
-    Tcl_CreateObjCommand(interp, "align_left", &cmd_align_left, this, nullptr);
-    Tcl_CreateObjCommand(interp, "align_center", &cmd_align_center, this, nullptr);
-    Tcl_CreateObjCommand(interp, "align_right", &cmd_align_right, this, nullptr);
-    Tcl_CreateObjCommand(interp, "align_top", &cmd_align_top, this, nullptr);
-    Tcl_CreateObjCommand(interp, "align_middle", &cmd_align_middle, this, nullptr);
-    Tcl_CreateObjCommand(interp, "align_bottom", &cmd_align_bottom, this, nullptr);
-    Tcl_CreateObjCommand(interp, "hsize", &cmd_hsize, this, nullptr);
-    Tcl_CreateObjCommand(interp, "vsize", &cmd_vsize, this, nullptr);
-    Tcl_CreateObjCommand(interp, "hmin_size", &cmd_hmin_size, this, nullptr);
-    Tcl_CreateObjCommand(interp, "vmin_size", &cmd_vmin_size, this, nullptr);
-    Tcl_CreateObjCommand(interp, "hmax_size", &cmd_hmax_size, this, nullptr);
-    //Tcl_CreateObjCommand(interp, "vmax_size", &cmd_vmax_size, this, nullptr);
-    Tcl_CreateObjCommand(interp, "left_margin", &cmd_left_margin, this, nullptr);
-    Tcl_CreateObjCommand(interp, "top_margin", &cmd_top_margin, this, nullptr);
-    Tcl_CreateObjCommand(interp, "right_margin", &cmd_right_margin, this, nullptr);
-    Tcl_CreateObjCommand(interp, "bottom_margin", &cmd_bottom_margin, this, nullptr);
-    Tcl_CreateObjCommand(interp, "halign", &cmd_halign, this, nullptr);
-    Tcl_CreateObjCommand(interp, "valign", &cmd_valign, this, nullptr);
-    Tcl_CreateObjCommand(interp, "min_size", &cmd_min_size, this, nullptr);
-    Tcl_CreateObjCommand(interp, "max_size", &cmd_max_size, this, nullptr);
-    Tcl_CreateObjCommand(interp, "xside_margin", &cmd_xside_margin, this, nullptr);
-    Tcl_CreateObjCommand(interp, "yside_margin", &cmd_yside_margin, this, nullptr);
-    Tcl_CreateObjCommand(interp, "image", &cmd_image, this, nullptr);
-    Tcl_CreateObjCommand(interp, "gizmo", &cmd_gizmo, this, nullptr);
-    Tcl_CreateObjCommand(interp, "hgizmo", &cmd_hgizmo, this, nullptr);
-    Tcl_CreateObjCommand(interp, "vgizmo", &cmd_vgizmo, this, nullptr);
-    Tcl_CreateObjCommand(interp, "sprite", &cmd_sprite, this, nullptr);
-    Tcl_CreateObjCommand(interp, "basic_thumb", &cmd_basic_thumb, this, nullptr);
-    Tcl_CreateObjCommand(interp, "basic_track", &cmd_basic_track, this, nullptr);
-    Tcl_CreateObjCommand(interp, "slider", &cmd_slider, this, nullptr);
-    Tcl_CreateObjCommand(interp, "slider_marks", &cmd_slider_marks, this, nullptr);
-    Tcl_CreateObjCommand(interp, "slider_labels", &cmd_slider_labels, this, nullptr);
+    register_element_commands(interp, (ClientData)this);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)

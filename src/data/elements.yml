@@ -1,0 +1,340 @@
+elements:
+    - name: button
+      kwargs:
+          - {name: size, type: float, description: "Size", init: "{1.0}"}
+          - {name: icon, type: icon, description: "Icon"}
+          - {name: icon_pos, type: icon_pos, description: "Icon position", init: "{ESCRIPT_ICON_POS_LEFT}"}
+          - {name: body_color, type: color, description: "Body color", init: "{el::get_theme().default_button_color}"}
+      args:
+          - {name: text, type: string, description: "Text"}
+      make:
+          |
+              auto element =
+                  (icon && icon_pos == ESCRIPT_ICON_POS_LEFT) ? el::share(el::button(icon, text, size, body_color)) :
+                  icon ? el::share(el::button(text, icon, size, body_color)) :
+                  el::share(el::button(text, size, body_color));
+
+    - name: basic_thumb
+      kwargs:
+          - {name: color, type: color, description: "Color", init: "{el::colors::black}"}
+      args:
+          - {name: size, type: int, description: "Size"}
+      make:
+          |
+              auto element = el::share(dy::basic_thumb(size, color));
+
+    - name: basic_track
+      kwargs:
+          - {name: color, type: color, description: "Color", init: "{el::colors::black}"}
+          - {name: vertical, type: constant_true, description: "Vertical"}
+      args:
+          - {name: size, type: int, description: "Size"}
+      make:
+          |
+              auto element = el::share(dy::basic_track(size, vertical, color));
+
+    - name: slider
+      kwargs:
+          - {name: init_value, type: float, description: "Initial value"}
+      args:
+          - {name: thumb, type: element, description: "Thumb"}
+          - {name: track, type: element, description: "Track"}
+      make:
+          |
+              auto element = el::share(el::slider(el::hold(thumb->element), el::hold(track->element), init_value));
+
+    - name: slider_marks
+      kwargs:
+          - {name: num_divs, type: int, description: "Number of divisions", init: "{50}"}
+          - {name: major_divs, type: int, description: "Number of major divisions", init: "{10}"}
+      args:
+          - {name: size, type: int, description: "Size"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(dy::slider_marks(el::hold(subject->element), size, num_divs, major_divs));
+
+    - name: slider_labels
+      kwargs: []
+      args:
+          - {name: size, type: int, description: "Size"}
+          - {name: font_size, type: float, description: "Font size"}
+          - {name: labels, type: string_list, description: "Labels"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(dy::slider_labels(el::hold(subject->element), size, font_size));
+              element->_labels = labels;
+
+    - name: htile
+      kwargs: []
+      args:
+          - {name: items, type: element_rest, description: "Items"}
+      make:
+          |
+              auto element = el::share(el::htile_composite());
+              for (element_obj *item : items)
+                  element->push_back(item->element);
+
+    - name: vtile
+      kwargs: []
+      args:
+          - {name: items, type: element_rest, description: "Items"}
+      make:
+          |
+              auto element = el::share(el::vtile_composite());
+              for (element_obj *item : items)
+                  element->push_back(item->element);
+
+    - name: layer
+      kwargs: []
+      args:
+          - {name: items, type: element_rest, description: "Items"}
+      make:
+          |
+              auto element = el::share(el::layer_composite());
+              for (element_obj *item : items)
+                  element->push_back(item->element);
+
+    - name: deck
+      kwargs: []
+      args:
+          - {name: items, type: element_rest, description: "Items"}
+      make:
+          |
+              auto element = el::share(el::deck_composite());
+              for (element_obj *item : items)
+                  element->push_back(item->element);
+
+    - name: align_left
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::align_left(el::hold(subject->element)));
+
+    - name: align_center
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::align_center(el::hold(subject->element)));
+
+    - name: align_right
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::align_right(el::hold(subject->element)));
+
+    - name: align_top
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::align_top(el::hold(subject->element)));
+
+    - name: align_middle
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::align_middle(el::hold(subject->element)));
+
+    - name: align_bottom
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::align_bottom(el::hold(subject->element)));
+
+    - name: hsize
+      kwargs: []
+      args:
+          - {name: width, type: float, description: "Width"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::hsize(width, el::hold(subject->element)));
+
+    - name: vsize
+      kwargs: []
+      args:
+          - {name: height, type: float, description: "Height"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::vsize(height, el::hold(subject->element)));
+
+    - name: hmin_size
+      kwargs: []
+      args:
+          - {name: width, type: float, description: "Width"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::hmin_size(width, el::hold(subject->element)));
+
+    - name: vmin_size
+      kwargs: []
+      args:
+          - {name: height, type: float, description: "Height"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::vmin_size(height, el::hold(subject->element)));
+
+    - name: hmax_size
+      kwargs: []
+      args:
+          - {name: width, type: float, description: "Width"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::hmax_size(width, el::hold(subject->element)));
+
+    - name: left_margin
+      kwargs: []
+      args:
+          - {name: size, type: float, description: "Size"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::left_margin(size, el::hold(subject->element)));
+
+    - name: top_margin
+      kwargs: []
+      args:
+          - {name: size, type: float, description: "Size"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::top_margin(size, el::hold(subject->element)));
+
+    - name: right_margin
+      kwargs: []
+      args:
+          - {name: size, type: float, description: "Size"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::right_margin(size, el::hold(subject->element)));
+
+    - name: bottom_margin
+      kwargs: []
+      args:
+          - {name: size, type: float, description: "Size"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::bottom_margin(size, el::hold(subject->element)));
+
+    - name: halign
+      kwargs: []
+      args:
+          - {name: align, type: float, description: "Alignment"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::halign(align, el::hold(subject->element)));
+
+    - name: valign
+      kwargs: []
+      args:
+          - {name: align, type: float, description: "Alignment"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::valign(align, el::hold(subject->element)));
+
+    - name: min_size
+      kwargs: []
+      args:
+          - {name: width, type: float, description: "Width"}
+          - {name: height, type: float, description: "Height"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::min_size(el::point(width, height), el::hold(subject->element)));
+
+    - name: max_size
+      kwargs: []
+      args:
+          - {name: width, type: float, description: "Width"}
+          - {name: height, type: float, description: "Height"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::max_size(el::point(width, height), el::hold(subject->element)));
+
+    - name: xside_margin
+      kwargs: []
+      args:
+          - {name: left, type: float, description: "Left"}
+          - {name: right, type: float, description: "Right"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::xside_margin(el::xside_margin_rect(left, right), el::hold(subject->element)));
+
+    - name: yside_margin
+      kwargs: []
+      args:
+          - {name: top, type: float, description: "Top"}
+          - {name: bottom, type: float, description: "Bottom"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::yside_margin(el::yside_margin_rect(top, bottom), el::hold(subject->element)));
+
+    - name: image
+      kwargs:
+          - {name: scale, type: float, description: "Scale factor", init: "{1.0}"}
+      args:
+          - {name: filename, type: string, description: "File name"}
+      make:
+          |
+              auto element = el::share(el::image(filename, scale));
+
+    - name: gizmo
+      kwargs:
+          - {name: scale, type: float, description: "Scale factor", init: "{1.0}"}
+      args:
+          - {name: filename, type: string, description: "File name"}
+      make:
+          |
+              auto element = el::share(el::gizmo(filename, scale));
+
+    - name: hgizmo
+      kwargs:
+          - {name: scale, type: float, description: "Scale factor", init: "{1.0}"}
+      args:
+          - {name: filename, type: string, description: "File name"}
+      make:
+          |
+              auto element = el::share(el::hgizmo(filename, scale));
+
+    - name: vgizmo
+      kwargs:
+          - {name: scale, type: float, description: "Scale factor", init: "{1.0}"}
+      args:
+          - {name: filename, type: string, description: "File name"}
+      make:
+          |
+              auto element = el::share(el::vgizmo(filename, scale));
+
+    - name: sprite
+      kwargs:
+          - {name: scale, type: float, description: "Scale factor", init: "{1.0}"}
+      args:
+          - {name: filename, type: string, description: "File name"}
+          - {name: height, type: float, description: "Height"}
+      make:
+          |
+              auto element = el::share(el::sprite(filename, height, scale));
