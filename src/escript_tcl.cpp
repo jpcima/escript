@@ -2,35 +2,35 @@
 
 namespace escript {
 
-int parse_positional_objv(Tcl_Interp *interp, Tcl_Obj **objv, ...)
+int parse_positional_objv(Tcl_Interp *interp, int objc, Tcl_Obj *const *objv, ...)
 {
     va_list ap;
     va_start(ap, objv);
+    int err = vparse_positional_objv(interp, objc, objv, ap);
+    va_end(ap);
+    return err;
+}
 
-    size_t index = 1;
-    if (objv[0] == nullptr) {
-        va_end(ap);
+int vparse_positional_objv(Tcl_Interp *interp, int objc, Tcl_Obj *const *objv, va_list ap)
+{
+    int index = 1;
+    if (objc < 1)
         return TCL_ERROR;
-    }
 
     int argtype;
     while ((argtype = va_arg(ap, int))) {
         switch (argtype) {
         case ESCRIPT_ARGV_OBJ:
-            if (!objv[index]) {
-                va_end(ap);
+            if (index == objc)
                 return TCL_ERROR;
-            }
             *va_arg(ap, Tcl_Obj **) = objv[index];
             ++index;
             break;
         case TCL_ARGV_STRING:
             {
                 const char *str = nullptr;
-                if (!objv[index] || !(str = Tcl_GetString(objv[index]))) {
-                    va_end(ap);
+                if (index == objc || !(str = Tcl_GetString(objv[index])))
                     return TCL_ERROR;
-                }
                 *va_arg(ap, const char **) = str;
                 ++index;
             }
@@ -38,10 +38,8 @@ int parse_positional_objv(Tcl_Interp *interp, Tcl_Obj **objv, ...)
         case TCL_ARGV_INT:
             {
                 int val = 0;
-                if (!objv[index] || Tcl_GetIntFromObj(interp, objv[index], &val) != TCL_OK) {
-                    va_end(ap);
+                if (index == objc || Tcl_GetIntFromObj(interp, objv[index], &val) != TCL_OK)
                     return TCL_ERROR;
-                }
                 *va_arg(ap, int *) = val;
                 ++index;
             }
@@ -49,26 +47,46 @@ int parse_positional_objv(Tcl_Interp *interp, Tcl_Obj **objv, ...)
         case TCL_ARGV_FLOAT:
             {
                 double val = 0;
-                if (!objv[index] || Tcl_GetDoubleFromObj(interp, objv[index], &val) != TCL_OK) {
-                    va_end(ap);
+                if (index == objc || Tcl_GetDoubleFromObj(interp, objv[index], &val) != TCL_OK)
                     return TCL_ERROR;
-                }
                 *va_arg(ap, double *) = val;
                 ++index;
             }
             break;
         default:
-            va_end(ap);
             return TCL_ERROR;
         }
     }
 
-    if (objv[index] != nullptr) {
-        va_end(ap);
+    if (index != objc)
         return TCL_ERROR;
-    }
 
+    return TCL_OK;
+}
+
+int parse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj *const *objv, ...)
+{
+    va_list ap;
+    va_start(ap, objv);
+    int err = vparse_objv(interp, info, objc, objv, ap);
     va_end(ap);
+    return err;
+}
+
+int vparse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj *const *objv, va_list ap)
+{
+    Tcl_Obj **rem = nullptr;
+    int err = TCL_OK;
+
+    err = Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem);
+    if (err != TCL_OK)
+        return err;
+    ck_u rem_cleanup{rem};
+
+    err = vparse_positional_objv(interp, objc, rem, ap);
+    if (err != TCL_OK)
+        return err;
+
     return TCL_OK;
 }
 

@@ -139,10 +139,7 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
     };
 
-    Tcl_Obj **rem = nullptr;
-    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
-        parse_positional_objv(interp, rem, TCL_ARGV_STRING, &text, 0) != TCL_OK)
-    {
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_STRING, &text, 0) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"button: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -200,10 +197,11 @@ int cmd_generic_composite(ClientData client_data, Tcl_Interp *interp, int objc, 
         Tcl_SetResult(interp, (char *)"composite: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
+    ck_u rem_cleanup(rem);
 
     auto composite = el::share(T());
-    for (Tcl_Obj **p = rem + 1; *p; ++p) {
-        Tcl_Obj *item = *p;
+    for (int i = 1; i < objc; ++i) {
+        Tcl_Obj *item = rem[i];
         element_obj *elt = reinterpret_cast<element_obj *>(item->internalRep.twoPtrValue.ptr1);
         if (item->typePtr != &element_obj_type) {
             Tcl_SetResult(interp, (char *)"composite: the item is not of type ELEMENT", TCL_STATIC);
@@ -254,10 +252,7 @@ int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, T
         TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
     };
 
-    Tcl_Obj **rem = nullptr;
-    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
-        parse_positional_objv(interp, rem, TCL_ARGV_FLOAT, &coord, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK)
-    {
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_FLOAT, &coord, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -343,10 +338,7 @@ int cmd_generic_proxy_2f(ClientData client_data, Tcl_Interp *interp, int objc, T
         TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
     };
 
-    Tcl_Obj **rem = nullptr;
-    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
-        parse_positional_objv(interp, rem, TCL_ARGV_FLOAT, &coord1, TCL_ARGV_FLOAT, &coord2, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK)
-    {
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_FLOAT, &coord1, TCL_ARGV_FLOAT, &coord2, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -402,10 +394,7 @@ int cmd_generic_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
     };
 
-    Tcl_Obj **rem = nullptr;
-    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
-        parse_positional_objv(interp, rem, TCL_ARGV_STRING, &filename, 0) != TCL_OK)
-    {
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_STRING, &filename, 0) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -455,10 +444,7 @@ int cmd_sprite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
     };
 
-    Tcl_Obj **rem = nullptr;
-    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK ||
-        parse_positional_objv(interp, rem, TCL_ARGV_STRING, &filename, TCL_ARGV_FLOAT, &height, 0) != TCL_OK)
-    {
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_STRING, &filename, TCL_ARGV_FLOAT, &height, 0) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
