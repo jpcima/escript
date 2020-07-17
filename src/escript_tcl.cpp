@@ -90,4 +90,17 @@ int vparse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj 
     return TCL_OK;
 }
 
+///
+void free_internal_rep(Tcl_Obj *obj)
+{
+    const Tcl_ObjType *type = obj->typePtr;
+    if (!type)
+        return;
+
+    if (type->freeIntRepProc) {
+        type->freeIntRepProc(obj);
+        obj->typePtr = nullptr;
+    }
+}
+
 } // namespace escript

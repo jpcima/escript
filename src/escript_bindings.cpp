@@ -30,7 +30,7 @@ static void engine_obj_free(Tcl_Obj *obj)
 
 static void engine_obj_dup(Tcl_Obj *src_obj, Tcl_Obj *dst_obj)
 {
-    engine_obj_free(dst_obj);
+    free_internal_rep(dst_obj);
     dst_obj->internalRep.twoPtrValue.ptr1 = src_obj->internalRep.twoPtrValue.ptr1;
     dst_obj->typePtr = &engine_obj_type;
 }
@@ -89,7 +89,7 @@ static void element_obj_free(Tcl_Obj *obj)
 
 static void element_obj_dup(Tcl_Obj *src_obj, Tcl_Obj *dst_obj)
 {
-    element_obj_free(dst_obj);
+    free_internal_rep(dst_obj);
     dst_obj->internalRep.twoPtrValue.ptr1 = new element_obj(
         *reinterpret_cast<element_obj *>(src_obj->internalRep.twoPtrValue.ptr1));
     dst_obj->typePtr = &element_obj_type;

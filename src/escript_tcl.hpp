@@ -33,4 +33,7 @@ int vparse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj 
 ///
 #define ESCRIPT_ARGV_OBJ -1
 
+///
+void free_internal_rep(Tcl_Obj *obj);
+
 } // namespace escript
