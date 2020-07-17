@@ -125,6 +125,43 @@ Tcl_ObjType element_obj_type = {
 };
 
 ///
+template <class I, class E>
+typename std::enable_if<std::is_base_of<I, E>::value, bool>::type
+get_element_interface(I &interface, E &element)
+{
+    interface = static_cast<I &>(element);
+    return true;
+}
+
+template <class I, class E>
+typename std::enable_if<!std::is_base_of<I, E>::value, bool>::type
+get_element_interface(I &interface, E &element)
+{
+    return false;
+}
+
+template <class Element>
+static Tcl_Obj *create_element_result(Tcl_Interp *interp, const char *id, Element &element)
+{
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = el::share(element);
+    get_element_interface(*elt->receiver_bool, element);
+    get_element_interface(*elt->receiver_int, element);
+    get_element_interface(*elt->receiver_double, element);
+    get_element_interface(*elt->receiver_string, element);
+    get_element_interface(*elt->sender_bool, element);
+    get_element_interface(*elt->sender_int, element);
+    get_element_interface(*elt->sender_double, element);
+    get_element_interface(*elt->sender_string, element);
+    get_element_interface(*elt->text_reader, element);
+    get_element_interface(*elt->text_writer, element);
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+    return result;
+}
+
+///
 int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
@@ -174,14 +211,7 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
                           el::share(el::button(text, icon_code, size, body_color_code))) :
         el::share(el::button(text, size, body_color_code));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = button;
-    elt->receiver_bool = static_cast<el::receiver<bool> *>(button.get());
-    elt->sender_bool = static_cast<el::sender<bool> *>(button.get());
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *button);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -213,12 +243,7 @@ int cmd_basic_thumb(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Ob
 
     auto thumb = el::share(dy::basic_thumb(size, color_code));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = thumb;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *thumb);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -253,12 +278,7 @@ int cmd_basic_track(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Ob
 
     auto track = el::share(dy::basic_track(size, vertical, color_code));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = track;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *track);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -295,12 +315,7 @@ int cmd_slider(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
 
     auto slider = el::share(el::slider(el::hold(elt_thumb->element), el::hold(elt_track->element), init_value));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = slider;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *slider);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -334,12 +349,7 @@ int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
 
     auto slider_marks = el::share(dy::slider_marks(el::hold(elt_subject->element), size, num_divs, major_divs));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = slider_marks;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *slider_marks);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -378,12 +388,7 @@ int cmd_slider_labels(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
     auto slider_labels = el::share(dy::slider_labels(el::hold(elt_subject->element), size, font_size));
     slider_labels->_labels = vec_labels;
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = slider_labels;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *slider_labels);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -416,12 +421,7 @@ int cmd_generic_composite(ClientData client_data, Tcl_Interp *interp, int objc, 
         composite->push_back(elt->element);
     }
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = composite;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *composite);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -470,12 +470,7 @@ int cmd_generic_proxy_0m(F &&make, ClientData client_data, Tcl_Interp *interp, i
     element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
     auto proxy = el::share(make(el::hold(subject_elt->element)));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = proxy;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *proxy);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -541,12 +536,7 @@ int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, T
     element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
     auto proxy = el::share(T(Coord(coord), el::hold(subject_elt->element)));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = proxy;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *proxy);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -637,12 +627,7 @@ int cmd_generic_proxy_2f(ClientData client_data, Tcl_Interp *interp, int objc, T
     element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
     auto proxy = el::share(T({Coord(coord1), Coord(coord2)}, el::hold(subject_elt->element)));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = proxy;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *proxy);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -687,12 +672,7 @@ int cmd_generic_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
 
     auto image = el::share(T(filename, scale));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = image;
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *image);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
@@ -737,14 +717,7 @@ int cmd_sprite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
 
     auto sprite = el::share(el::sprite(filename, height, scale));
 
-    Tcl_Obj *result = element_obj_new();
-    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
-    elt->element = sprite;
-    elt->receiver_int = static_cast<el::receiver<int> *>(sprite.get());
-    elt->receiver_double = static_cast<el::receiver<double> *>(sprite.get());
-    Tcl_InvalidateStringRep(result);
-    register_element(interp, id, *elt);
-
+    Tcl_Obj *result = create_element_result(interp, id, *sprite);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
