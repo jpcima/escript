@@ -1,5 +1,7 @@
 #pragma once
 #include <tcl.h>
+#include <elements/support/color.hpp>
+#include <infra/string_view.hpp>
 #include <vector>
 #include <string>
 #include <memory>
@@ -27,13 +29,24 @@ struct ck_deleter {
 typedef std::unique_ptr<void, ck_deleter> ck_u;
 
 ///
-int parse_positional_objv(Tcl_Interp *interp, int objc, Tcl_Obj *const *objv, ...);
-int vparse_positional_objv(Tcl_Interp *interp, int objc, Tcl_Obj *const *objv, va_list ap);
-int parse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj *const *objv, ...);
-int vparse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj *const *objv, va_list ap);
+int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj *const *objv);
+bool parse_color(cycfi::string_view name, cycfi::elements::color &color);
 
 ///
-#define ESCRIPT_ARGV_OBJ -1
+enum {
+    ESCRIPT_ARGV_FIRST = -1000,
+
+    ESCRIPT_ARGV_OBJ = ESCRIPT_ARGV_FIRST,
+    ESCRIPT_ARGV_ELEMENT,
+    ESCRIPT_ARGV_COLOR,
+    ESCRIPT_ARGV_STRING_LIST,
+
+    // n-args, positional only
+    ESCRIPT_ARGV_ELEMENT_REST,
+
+    ESCRIPT_ARGV_AFTER_LAST,
+    ESCRIPT_ARGV_LAST = ESCRIPT_ARGV_AFTER_LAST - 1,
+};
 
 ///
 int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &dst);

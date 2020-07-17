@@ -168,7 +168,7 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     double size = 1.0;
     const char *icon = nullptr;
     const char *icon_pos = nullptr;
-    const char *body_color = nullptr;
+    el::color body_color = el::get_theme().default_button_color;
     const char *text = nullptr;
 
     const Tcl_ArgvInfo info[] = {
@@ -176,11 +176,12 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         {TCL_ARGV_FLOAT, "-size", nullptr, &size, "Size", nullptr},
         {TCL_ARGV_STRING, "-icon", nullptr, &icon, "Icon", nullptr},
         {TCL_ARGV_STRING, "-icon_pos", nullptr, &icon_pos, "Icon position", nullptr},
-        {TCL_ARGV_STRING, "-body_color", nullptr, &body_color, "Body color", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {ESCRIPT_ARGV_COLOR, "-body_color", nullptr, &body_color, "Body color", nullptr},
+        {TCL_ARGV_STRING, nullptr, nullptr, &text, "Text", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_STRING, &text, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"button: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -197,19 +198,10 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
         return TCL_ERROR;
     }
 
-    el::color body_color_code;
-    if (body_color) {
-        if (!parse_color(body_color, body_color_code)) {
-            Tcl_SetResult(interp, (char *)"button: invalid body color code", TCL_STATIC);
-            return TCL_ERROR;
-        }
-    } else
-        body_color_code = el::get_theme().default_button_color;
-
     auto button = icon ? ((icon_pos_code == 1) ?
-                          el::share(el::button(icon_code, text, size, body_color_code)) :
-                          el::share(el::button(text, icon_code, size, body_color_code))) :
-        el::share(el::button(text, size, body_color_code));
+                          el::share(el::button(icon_code, text, size, body_color)) :
+                          el::share(el::button(text, icon_code, size, body_color))) :
+        el::share(el::button(text, size, body_color));
 
     Tcl_Obj *result = create_element_result(interp, id, *button);
     Tcl_SetObjResult(interp, result);
@@ -219,29 +211,22 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
 int cmd_basic_thumb(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
-    const char *color = nullptr;
+    el::color color = el::colors::black;
     int size = 0;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        {TCL_ARGV_STRING, "-color", nullptr, &color, "Color", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {ESCRIPT_ARGV_COLOR, "-color", nullptr, &color, "Color", nullptr},
+        {TCL_ARGV_INT, nullptr, nullptr, &size, "Size", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"basic_thumb: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    el::color color_code = el::colors::black;
-    if (color) {
-        if (!parse_color(color, color_code)) {
-            Tcl_SetResult(interp, (char *)"basic_thumb: invalid color code", TCL_STATIC);
-            return TCL_ERROR;
-        }
-    }
-
-    auto thumb = el::share(dy::basic_thumb(size, color_code));
+    auto thumb = el::share(dy::basic_thumb(size, color));
 
     Tcl_Obj *result = create_element_result(interp, id, *thumb);
     Tcl_SetObjResult(interp, result);
@@ -260,10 +245,11 @@ int cmd_basic_track(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Ob
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
         {TCL_ARGV_STRING, "-color", nullptr, &color, "Color", nullptr},
         {TCL_ARGV_CONSTANT, "-vertical", &k_true, &vertical, "Vertical", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_INT, nullptr, nullptr, &size, "Size", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"basic_track: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -287,33 +273,23 @@ int cmd_slider(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
 {
     const char *id = nullptr;
     double init_value = 0.0;
-    Tcl_Obj *thumb = nullptr;
-    Tcl_Obj *track = nullptr;
+    element_obj *thumb = nullptr;
+    element_obj *track = nullptr;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
         {TCL_ARGV_FLOAT, "-init_value", nullptr, &init_value, "Initial value", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &thumb, "Thumb", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &track, "Track", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, ESCRIPT_ARGV_OBJ, &thumb, ESCRIPT_ARGV_OBJ, &track, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"slider: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    if (thumb->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"slider: the thumb is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-    if (track->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"slider: the track is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    element_obj *elt_thumb = reinterpret_cast<element_obj *>(thumb->internalRep.twoPtrValue.ptr1);
-    element_obj *elt_track = reinterpret_cast<element_obj *>(track->internalRep.twoPtrValue.ptr1);
-
-    auto slider = el::share(el::slider(el::hold(elt_thumb->element), el::hold(elt_track->element), init_value));
+    auto slider = el::share(el::slider(el::hold(thumb->element), el::hold(track->element), init_value));
 
     Tcl_Obj *result = create_element_result(interp, id, *slider);
     Tcl_SetObjResult(interp, result);
@@ -323,7 +299,7 @@ int cmd_slider(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
 int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
-    Tcl_Obj *subject = nullptr;
+    element_obj *subject = nullptr;
     int size = 0;
     int num_divs = 50;
     int major_divs = 10;
@@ -332,22 +308,17 @@ int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
         {TCL_ARGV_INT, "-num_divs", nullptr, &num_divs, "Number of divisions", nullptr},
         {TCL_ARGV_INT, "-major_divs", nullptr, &major_divs, "Number of major divisions", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_INT, nullptr, nullptr, &size, "Size", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"slider_marks: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    if (subject->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"slider_marks: the subject is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    element_obj *elt_subject = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-
-    auto slider_marks = el::share(dy::slider_marks(el::hold(elt_subject->element), size, num_divs, major_divs));
+    auto slider_marks = el::share(dy::slider_marks(el::hold(subject->element), size, num_divs, major_divs));
 
     Tcl_Obj *result = create_element_result(interp, id, *slider_marks);
     Tcl_SetObjResult(interp, result);
@@ -357,36 +328,27 @@ int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
 int cmd_slider_labels(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
-    Tcl_Obj *subject = nullptr;
+    element_obj *subject = nullptr;
     int size = 0;
     double font_size = 0;
-    Tcl_Obj *labels = nullptr;
+    std::vector<std::string> labels;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_INT, nullptr, nullptr, &size, "Size", nullptr},
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &size, "Font size", nullptr},
+        {ESCRIPT_ARGV_STRING_LIST, nullptr, nullptr, &labels, "Labels", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, TCL_ARGV_FLOAT, &font_size, ESCRIPT_ARGV_OBJ, &labels, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"slider_labels: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    if (subject->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"slider_labels: the subject is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    std::vector<std::string> vec_labels;
-    if (to_string_list(interp, labels, vec_labels) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"slider_labels: invalid list of labels", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    element_obj *elt_subject = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-
-    auto slider_labels = el::share(dy::slider_labels(el::hold(elt_subject->element), size, font_size));
-    slider_labels->_labels = vec_labels;
+    auto slider_labels = el::share(dy::slider_labels(el::hold(subject->element), size, font_size));
+    slider_labels->_labels = labels;
 
     Tcl_Obj *result = create_element_result(interp, id, *slider_labels);
     Tcl_SetObjResult(interp, result);
@@ -397,29 +359,22 @@ template <class T>
 int cmd_generic_composite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
+    std::vector<element_obj *> items;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {ESCRIPT_ARGV_ELEMENT_REST, nullptr, nullptr, &items, "Items", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    Tcl_Obj **rem = nullptr;
-    if (Tcl_ParseArgsObjv(interp, info, &objc, objv, &rem) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"composite: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
-    ck_u rem_cleanup(rem);
 
     auto composite = el::share(T());
-    for (int i = 1; i < objc; ++i) {
-        Tcl_Obj *item = rem[i];
-        element_obj *elt = reinterpret_cast<element_obj *>(item->internalRep.twoPtrValue.ptr1);
-        if (item->typePtr != &element_obj_type) {
-            Tcl_SetResult(interp, (char *)"composite: the item is not of type ELEMENT", TCL_STATIC);
-            return TCL_ERROR;
-        }
-        composite->push_back(elt->element);
-    }
+    for (element_obj *item : items)
+        composite->push_back(item->element);
 
     Tcl_Obj *result = create_element_result(interp, id, *composite);
     Tcl_SetObjResult(interp, result);
@@ -450,25 +405,20 @@ template <class F>
 int cmd_generic_proxy_0m(F &&make, ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id = nullptr;
-    Tcl_Obj *subject = nullptr;
+    element_obj *subject = nullptr;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    if (subject->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"proxy: the item is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-    auto proxy = el::share(make(el::hold(subject_elt->element)));
+    auto proxy = el::share(make(el::hold(subject->element)));
 
     Tcl_Obj *result = create_element_result(interp, id, *proxy);
     Tcl_SetObjResult(interp, result);
@@ -516,25 +466,21 @@ int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, T
 {
     const char *id = nullptr;
     double coord = 0.0;
-    Tcl_Obj *subject = nullptr;
+    element_obj *subject = nullptr;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &coord, "Coord", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_FLOAT, &coord, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    if (subject->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"proxy: the item is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-    auto proxy = el::share(T(Coord(coord), el::hold(subject_elt->element)));
+    auto proxy = el::share(T(Coord(coord), el::hold(subject->element)));
 
     Tcl_Obj *result = create_element_result(interp, id, *proxy);
     Tcl_SetObjResult(interp, result);
@@ -607,25 +553,22 @@ int cmd_generic_proxy_2f(ClientData client_data, Tcl_Interp *interp, int objc, T
     const char *id = nullptr;
     double coord1 = 0.0;
     double coord2 = 0.0;
-    Tcl_Obj *subject = nullptr;
+    element_obj *subject = nullptr;
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &coord1, "Coord 1", nullptr},
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &coord2, "Coord 2", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_FLOAT, &coord1, TCL_ARGV_FLOAT, &coord2, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
 
-    if (subject->typePtr != &element_obj_type) {
-        Tcl_SetResult(interp, (char *)"proxy: the item is not of type ELEMENT", TCL_STATIC);
-        return TCL_ERROR;
-    }
-
-    element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
-    auto proxy = el::share(T({Coord(coord1), Coord(coord2)}, el::hold(subject_elt->element)));
+    auto proxy = el::share(T({Coord(coord1), Coord(coord2)}, el::hold(subject->element)));
 
     Tcl_Obj *result = create_element_result(interp, id, *proxy);
     Tcl_SetObjResult(interp, result);
@@ -661,11 +604,12 @@ int cmd_generic_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
 
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        {TCL_ARGV_FLOAT, "-scale", nullptr, &id, "Scale factor", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_FLOAT, "-scale", nullptr, &scale, "Scale factor", nullptr},
+        {TCL_ARGV_STRING, nullptr, nullptr, &filename, "File name", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_STRING, &filename, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -707,10 +651,12 @@ int cmd_sprite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
         {TCL_ARGV_FLOAT, "-scale", nullptr, &id, "Scale factor", nullptr},
-        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+        {TCL_ARGV_STRING, nullptr, nullptr, &filename, "File name", nullptr},
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &height, "Height", nullptr},
+        TCL_ARGV_TABLE_END
     };
 
-    if (parse_objv(interp, info, objc, objv, TCL_ARGV_STRING, &filename, TCL_ARGV_FLOAT, &height, 0) != TCL_OK) {
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
         Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
@@ -833,41 +779,6 @@ uint32_t lookup_icon(cycfi::string_view name)
 uint32_t lookup_icon_pos(cycfi::string_view name)
 {
     return (name == "left") ? 1 : (name == "right") ? 2 : 0;
-}
-
-static int hex_digit_from_char(char c)
-{
-    return (c >= '0' && c <= '9') ? (c - '0') :
-        (c >= 'a' && c <= 'z') ? (c - 'a' + 10) :
-        (c >= 'A' && c <= 'Z') ? (c - 'A' + 10) : -1;
-}
-
-bool parse_color(cycfi::string_view name, cycfi::elements::color &color)
-{
-    if (name.empty() || name[0] != '#')
-        return false;
-
-    name = name.substr(1);
-    size_t length = name.size();
-
-    uint32_t rgba = 0;
-    if (length == 6 || length == 8) {
-        for (size_t i = 0; i < length; ++i) {
-            int d = hex_digit_from_char(name[i]);
-            if (d == -1)
-                return false;
-            rgba = (rgba << 4) | d;
-        }
-    }
-    if (length == 6)
-        rgba = (rgba << 8) | 0xff;
-
-    color.red = (rgba >> 24) / 255.0;
-    color.green = ((rgba >> 16) & 0xff) / 255.0;
-    color.blue = ((rgba >> 8) & 0xff) / 255.0;
-    color.alpha = (rgba & 0xff) / 255.0;
-
-    return true;
 }
 
 } // namespace escript

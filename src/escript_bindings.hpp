@@ -69,6 +69,5 @@ int cmd_slider_labels(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
 void register_element(Tcl_Interp *interp, const char *id, const element_obj &elt);
 uint32_t lookup_icon(cycfi::string_view name);
 uint32_t lookup_icon_pos(cycfi::string_view name);
-bool parse_color(cycfi::string_view name, cycfi::elements::color &color);
 
 } // namespace escript
