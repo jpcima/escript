@@ -1,9 +1,11 @@
 #include "escript_bindings.hpp"
 #include "escript.hpp"
+#include "dynamic/slider.hpp"
 #include <elements.hpp>
 #include <unordered_map>
 #include <sstream>
 namespace el = cycfi::elements;
+namespace dy = dynamic::elements;
 
 namespace escript {
 
@@ -175,6 +177,83 @@ int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *co
     elt->element = button;
     elt->receiver_bool = static_cast<el::receiver<bool> *>(button.get());
     elt->sender_bool = static_cast<el::sender<bool> *>(button.get());
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+int cmd_basic_thumb(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    const char *color = nullptr;
+    int size = 0;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_STRING, "-color", nullptr, &color, "Color", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, 0) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"basic_thumb: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    el::color color_code = el::colors::black;
+    if (color) {
+        if (!parse_color(color, color_code)) {
+            Tcl_SetResult(interp, (char *)"basic_thumb: invalid color code", TCL_STATIC);
+            return TCL_ERROR;
+        }
+    }
+
+    auto thumb = el::share(dy::basic_thumb(size, color_code));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = thumb;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+int cmd_basic_track(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    const char *color = nullptr;
+    int vertical = 0;
+    int size = 0;
+
+    int k_true = 1;
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_STRING, "-color", nullptr, &color, "Color", nullptr},
+        {TCL_ARGV_CONSTANT, "-vertical", &k_true, &vertical, "Vertical", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, 0) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"basic_track: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    el::color color_code = el::colors::black;
+    if (color) {
+        if (!parse_color(color, color_code)) {
+            Tcl_SetResult(interp, (char *)"basic_track: invalid color code", TCL_STATIC);
+            return TCL_ERROR;
+        }
+    }
+
+    auto track = el::share(dy::basic_track(size, vertical, color_code));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = track;
     Tcl_InvalidateStringRep(result);
     register_element(interp, id, *elt);
 

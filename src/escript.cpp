@@ -45,6 +45,8 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "hgizmo", &cmd_hgizmo, this, nullptr);
     Tcl_CreateObjCommand(interp, "vgizmo", &cmd_vgizmo, this, nullptr);
     Tcl_CreateObjCommand(interp, "sprite", &cmd_sprite, this, nullptr);
+    Tcl_CreateObjCommand(interp, "basic_thumb", &cmd_basic_thumb, this, nullptr);
+    Tcl_CreateObjCommand(interp, "basic_track", &cmd_basic_track, this, nullptr);
 }
 
 void script_engine::register_element(const char *id, const element_obj &elt)

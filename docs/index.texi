@@ -30,6 +30,17 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-body_color} @emph{body_color} @*
 @end deffn
 
+@deffn Command basic_thumb size
+@strong{-id} @emph{identifier} @*
+@strong{-color} @emph{color} @*
+@end deffn
+
+@deffn Command basic_track size
+@strong{-id} @emph{identifier} @*
+@strong{-color} @emph{color} @*
+@strong{-vertical} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Image
 @unnumbered Image
