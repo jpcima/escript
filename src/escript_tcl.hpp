@@ -31,6 +31,14 @@ typedef std::unique_ptr<void, ck_deleter> ck_u;
 ///
 int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj *const *objv);
 bool parse_color(cycfi::string_view name, cycfi::elements::color &color);
+bool parse_icon(const char *name, uint32_t &icon);
+bool parse_icon_pos(cycfi::string_view name, uint32_t &icon_pos);
+
+///
+enum : uint32_t {
+    ESCRIPT_ICON_POS_LEFT,
+    ESCRIPT_ICON_POS_RIGHT,
+};
 
 ///
 enum {
@@ -39,6 +47,8 @@ enum {
     ESCRIPT_ARGV_OBJ = ESCRIPT_ARGV_FIRST,
     ESCRIPT_ARGV_ELEMENT,
     ESCRIPT_ARGV_COLOR,
+    ESCRIPT_ARGV_ICON,
+    ESCRIPT_ARGV_ICON_POS,
     ESCRIPT_ARGV_STRING_LIST,
 
     // n-args, positional only

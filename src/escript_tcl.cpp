@@ -1,7 +1,11 @@
 #include "escript_tcl.hpp"
 #include "escript_bindings.hpp"
+#include <elements/support/icon_ids.hpp>
 #include <vector>
+#include <unordered_map>
 #include <string>
+#include <limits>
+#include <cstdlib>
 
 namespace escript {
 
@@ -43,6 +47,30 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
                     *ctx->err = TCL_ERROR;
                 else
                     *(cycfi::elements::color *)dst = c;
+                return 1;
+            };
+        case ESCRIPT_ARGV_ICON:
+            return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
+            {
+                ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
+                const char *str = obj ? Tcl_GetString(obj) : nullptr;
+                uint32_t i;
+                if (!str || !parse_icon(str, i))
+                    *ctx->err = TCL_ERROR;
+                else
+                    *(uint32_t *)dst = i;
+                return 1;
+            };
+        case ESCRIPT_ARGV_ICON_POS:
+            return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
+            {
+                ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
+                const char *str = obj ? Tcl_GetString(obj) : nullptr;
+                uint32_t i;
+                if (!str || !parse_icon_pos(str, i))
+                    *ctx->err = TCL_ERROR;
+                else
+                    *(uint32_t *)dst = i;
                 return 1;
             };
         case ESCRIPT_ARGV_STRING_LIST:
@@ -237,6 +265,126 @@ bool parse_color(cycfi::string_view name, cycfi::elements::color &color)
     color.alpha = (rgba & 0xff) / 255.0;
 
     return true;
+}
+
+bool parse_icon(const char *name, uint32_t &icon)
+{
+    static const std::unordered_map<cycfi::string_view, uint32_t> icons = {
+        #define ICON(x) {#x, cycfi::elements::icons::x}
+        ICON(left),
+        ICON(right),
+        ICON(up),
+        ICON(down),
+        ICON(left_dir),
+        ICON(right_dir),
+        ICON(up_dir),
+        ICON(down_dir),
+        ICON(left_circled),
+        ICON(right_circled),
+        ICON(up_circled),
+        ICON(down_circled),
+        ICON(left_open),
+        ICON(right_open),
+        ICON(up_open),
+        ICON(down_open),
+        ICON(angle_left),
+        ICON(angle_right),
+        ICON(angle_up),
+        ICON(angle_down),
+        ICON(angle_double_left),
+        ICON(angle_double_right),
+        ICON(angle_double_up),
+        ICON(angle_double_down),
+        ICON(angle_circled_left),
+        ICON(angle_circled_right),
+        ICON(angle_circled_up),
+        ICON(angle_circled_down),
+        ICON(exclamation),
+        ICON(block),
+        ICON(pencil),
+        ICON(pin),
+        ICON(resize_vertical),
+        ICON(resize_horizontal),
+        ICON(move),
+        ICON(resize_full_alt),
+        ICON(resize_full),
+        ICON(resize_small),
+        ICON(magnifying_glass),
+        ICON(zoom_in),
+        ICON(zoom_out),
+        ICON(volume_off),
+        ICON(volume_down),
+        ICON(volume_up),
+        ICON(cw),
+        ICON(ccw),
+        ICON(cycle),
+        ICON(level_up),
+        ICON(level_down),
+        ICON(shuffle),
+        ICON(exchange),
+        ICON(power),
+        ICON(play),
+        ICON(stop),
+        ICON(pause),
+        ICON(record),
+        ICON(to_end),
+        ICON(to_start),
+        ICON(fast_forward),
+        ICON(fast_backward),
+        ICON(wrench),
+        ICON(trash),
+        ICON(trash_empty),
+        ICON(ok),
+        ICON(cancel),
+        ICON(plus),
+        ICON(minus),
+        ICON(cog),
+        ICON(doc),
+        ICON(docs),
+        ICON(lock_open),
+        ICON(lock),
+        ICON(sliders),
+        ICON(floppy),
+        ICON(attention),
+        ICON(info),
+        ICON(error),
+        ICON(lightbulb),
+        ICON(mixer),
+        ICON(hand),
+        ICON(question),
+        ICON(menu),
+        #undef ICON
+    };
+
+    auto it = icons.find(name);
+    if (it != icons.end()) {
+        icon = it->second;
+        return true;
+    }
+
+    errno = 0;
+    char *endptr = nullptr;
+    unsigned long value = strtoul(name, &endptr, 0);
+    unsigned long max_value = std::numeric_limits<uint32_t>::max();
+    if (errno == 0 && *endptr == '\0' && value <= max_value) {
+        icon = (uint32_t)value;
+        return true;
+    }
+
+    return false;
+}
+
+bool parse_icon_pos(cycfi::string_view name, uint32_t &icon_pos)
+{
+    if (name == "left") {
+        icon_pos = ESCRIPT_ICON_POS_LEFT;
+        return true;
+    }
+    if (name == "right") {
+        icon_pos = ESCRIPT_ICON_POS_RIGHT;
+        return true;
+    }
+    return false;
 }
 
 ///
