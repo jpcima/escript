@@ -1,45 +1,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Created on July 17, 2020 by texi2html 5.0
-texi2html was written by: 
-            Lionel Cons <Lionel.Cons@cern.ch> (original author)
-            Karl Berry  <karl@freefriends.org>
-            Olaf Bachmann <obachman@mathematik.uni-kl.de>
-            and many others.
-Maintained by: Many creative people.
-Send bugs and suggestions to <texi2html-bug@nongnu.org>
--->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>escript</title>
 
 <meta name="description" content="escript">
 <meta name="keywords" content="escript">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
-<meta name="Generator" content="texi2html 5.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="Generator" content="makeinfo">
+<link href="#Top" rel="start" title="Top">
+<link href="#Index" rel="index" title="Index">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
-blockquote.smallquotation {font-size: smaller}
+blockquote.indentedblock {margin-right: 0em}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
-div.smalldisplay {margin-left: 3.2em}
-div.smallexample {margin-left: 3.2em}
-div.smalllisp {margin-left: 3.2em}
-pre.display {font-family: serif}
-pre.format {font-family: serif}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
 pre.menu-preformatted {font-family: serif}
-pre.smalldisplay {font-family: serif; font-size: smaller}
-pre.smallexample {font-size: smaller}
-pre.smallformat {font-family: serif; font-size: smaller}
-pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:pre}
-span.nolinebreak {white-space:pre}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -47,61 +34,41 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
-
+<body lang="en">
 <h1 class="settitle" align="center">escript</h1>
-<hr>
-<a name="Top"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[ &lt; ]</td>
-<td valign="middle" align="left">[<a href="#Controls" title="Next section in reading order"> &gt; </a>]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Command-reference"></a>
-<h1 class="top">Command reference</h1>
+
+<span id="Top"></span><div class="header">
+<p>
+Next: <a href="#Controls" accesskey="n" rel="next">Controls</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Command-reference"></span><h1 class="top">Command reference</h1>
 
 <p>This manual is for escript documentation using the Tcl script language.
 </p>
 <table class="menu" border="0" cellspacing="0">
-<tr><td align="left" valign="top"><a href="#Controls">Controls</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> Control commands
+<tr><td align="left" valign="top">&bull; <a href="#Controls" accesskey="1">Controls</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Control commands
 </td></tr>
-<tr><td align="left" valign="top"><a href="#Image">Image</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> Image commands
+<tr><td align="left" valign="top">&bull; <a href="#Image" accesskey="2">Image</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Image commands
 </td></tr>
-<tr><td align="left" valign="top"><a href="#Layout">Layout</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> Layout commands
+<tr><td align="left" valign="top">&bull; <a href="#Layout" accesskey="3">Layout</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Layout commands
 </td></tr>
-<tr><td align="left" valign="top"><a href="#Size">Size</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> Size commands
+<tr><td align="left" valign="top">&bull; <a href="#Size" accesskey="4">Size</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Size commands
 </td></tr>
-<tr><td align="left" valign="top"><a href="#Margin">Margin</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top"> Margin commands
+<tr><td align="left" valign="top">&bull; <a href="#Margin" accesskey="5">Margin</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Margin commands
 </td></tr>
-<tr><td align="left" valign="top"><a href="#Index">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">  Complete index
+<tr><td align="left" valign="top">&bull; <a href="#Index" rel="index" accesskey="6">Index</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Complete index
 </td></tr>
 </table>
 
-<hr size="6">
-<a name="Controls"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Top" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
-<td valign="middle" align="left">[<a href="#Image" title="Next section in reading order"> &gt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Image" title="Next chapter"> &gt;&gt; </a>]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Controls-1"></a>
-<h1 class="unnumbered">Controls</h1>
+<hr>
+<span id="Controls"></span><div class="header">
+<p>
+Next: <a href="#Image" accesskey="n" rel="next">Image</a>, Previous: <a href="#Top" accesskey="p" rel="prev">Top</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Controls-1"></span><h2 class="unnumbered">Controls</h2>
 
 <dl>
-<dt><a name="index-button"></a>Command: <strong>button</strong><em> text</em></dt>
+<dt id="index-button">Command: <strong>button</strong> <em>text</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-size</strong> <em>size</em> <br>
 <strong>-icon</strong> <em>icon</em> <br>
@@ -110,462 +77,283 @@ ul.no-bullet {list-style: none}
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-basic_005fthumb"></a>Command: <strong>basic_thumb</strong><em> size</em></dt>
+<dt id="index-basic_005fthumb">Command: <strong>basic_thumb</strong> <em>size</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-color</strong> <em>color</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-basic_005ftrack"></a>Command: <strong>basic_track</strong><em> size</em></dt>
+<dt id="index-basic_005ftrack">Command: <strong>basic_track</strong> <em>size</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-color</strong> <em>color</em> <br>
 <strong>-vertical</strong> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-slider"></a>Command: <strong>slider</strong><em> thumb track</em></dt>
+<dt id="index-slider">Command: <strong>slider</strong> <em>thumb track</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-init_value</strong> <em>init_value</em> <br>
 </p></dd></dl>
 
 <hr>
-<a name="Image"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Controls" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Controls" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
-<td valign="middle" align="left">[<a href="#Layout" title="Next section in reading order"> &gt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Layout" title="Next chapter"> &gt;&gt; </a>]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Image-1"></a>
-<h1 class="unnumbered">Image</h1>
+<span id="Image"></span><div class="header">
+<p>
+Next: <a href="#Layout" accesskey="n" rel="next">Layout</a>, Previous: <a href="#Controls" accesskey="p" rel="prev">Controls</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Image-1"></span><h2 class="unnumbered">Image</h2>
 
 <dl>
-<dt><a name="index-image"></a>Command: <strong>image</strong><em> filename</em></dt>
+<dt id="index-image">Command: <strong>image</strong> <em>filename</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-scale</strong> <em>scale</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-gizmo"></a>Command: <strong>gizmo</strong><em> filename</em></dt>
+<dt id="index-gizmo">Command: <strong>gizmo</strong> <em>filename</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-scale</strong> <em>scale</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-hgizmo"></a>Command: <strong>hgizmo</strong><em> filename</em></dt>
+<dt id="index-hgizmo">Command: <strong>hgizmo</strong> <em>filename</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-scale</strong> <em>scale</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-vgizmo"></a>Command: <strong>vgizmo</strong><em> filename</em></dt>
+<dt id="index-vgizmo">Command: <strong>vgizmo</strong> <em>filename</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-scale</strong> <em>scale</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-sprite"></a>Command: <strong>sprite</strong><em> filename height</em></dt>
+<dt id="index-sprite">Command: <strong>sprite</strong> <em>filename height</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 <strong>-scale</strong> <em>scale</em> <br>
 </p></dd></dl>
 
 <hr>
-<a name="Layout"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Image" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Image" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
-<td valign="middle" align="left">[<a href="#Size" title="Next section in reading order"> &gt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Size" title="Next chapter"> &gt;&gt; </a>]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Layout-1"></a>
-<h1 class="unnumbered">Layout</h1>
+<span id="Layout"></span><div class="header">
+<p>
+Next: <a href="#Size" accesskey="n" rel="next">Size</a>, Previous: <a href="#Image" accesskey="p" rel="prev">Image</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Layout-1"></span><h2 class="unnumbered">Layout</h2>
 
 <dl>
-<dt><a name="index-htile"></a>Command: <strong>htile</strong><em> elements...</em></dt>
+<dt id="index-htile">Command: <strong>htile</strong> <em>elements...</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-vtile"></a>Command: <strong>vtile</strong><em> elements...</em></dt>
+<dt id="index-vtile">Command: <strong>vtile</strong> <em>elements...</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-layer"></a>Command: <strong>layer</strong><em> elements...</em></dt>
+<dt id="index-layer">Command: <strong>layer</strong> <em>elements...</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-deck"></a>Command: <strong>deck</strong><em> elements...</em></dt>
+<dt id="index-deck">Command: <strong>deck</strong> <em>elements...</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <hr>
-<a name="Size"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Layout" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Layout" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
-<td valign="middle" align="left">[<a href="#Margin" title="Next section in reading order"> &gt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Margin" title="Next chapter"> &gt;&gt; </a>]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Size-1"></a>
-<h1 class="unnumbered">Size</h1>
+<span id="Size"></span><div class="header">
+<p>
+Next: <a href="#Margin" accesskey="n" rel="next">Margin</a>, Previous: <a href="#Layout" accesskey="p" rel="prev">Layout</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Size-1"></span><h2 class="unnumbered">Size</h2>
 
 <dl>
-<dt><a name="index-hsize"></a>Command: <strong>hsize</strong><em> width</em></dt>
+<dt id="index-hsize">Command: <strong>hsize</strong> <em>width</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-vsize"></a>Command: <strong>vsize</strong><em> width</em></dt>
+<dt id="index-vsize">Command: <strong>vsize</strong> <em>width</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-hmin_005fsize"></a>Command: <strong>hmin_size</strong><em> width</em></dt>
+<dt id="index-hmin_005fsize">Command: <strong>hmin_size</strong> <em>width</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-hmax_005fsize"></a>Command: <strong>hmax_size</strong><em> width</em></dt>
+<dt id="index-hmax_005fsize">Command: <strong>hmax_size</strong> <em>width</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-min_005fsize"></a>Command: <strong>min_size</strong><em> width height</em></dt>
+<dt id="index-min_005fsize">Command: <strong>min_size</strong> <em>width height</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-max_005fsize"></a>Command: <strong>max_size</strong><em> width height</em></dt>
+<dt id="index-max_005fsize">Command: <strong>max_size</strong> <em>width height</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <hr>
-<a name="Margin"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Size" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Size" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Next section in reading order"> &gt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Next chapter"> &gt;&gt; </a>]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Margin-1"></a>
-<h1 class="unnumbered">Margin</h1>
+<span id="Margin"></span><div class="header">
+<p>
+Next: <a href="#Index" accesskey="n" rel="next">Index</a>, Previous: <a href="#Size" accesskey="p" rel="prev">Size</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Margin-1"></span><h2 class="unnumbered">Margin</h2>
 
 <dl>
-<dt><a name="index-left_005fmargin"></a>Command: <strong>left_margin</strong><em> left</em></dt>
+<dt id="index-left_005fmargin">Command: <strong>left_margin</strong> <em>left</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-top_005fmargin"></a>Command: <strong>top_margin</strong><em> top</em></dt>
+<dt id="index-top_005fmargin">Command: <strong>top_margin</strong> <em>top</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-right_005fmargin"></a>Command: <strong>right_margin</strong><em> right</em></dt>
+<dt id="index-right_005fmargin">Command: <strong>right_margin</strong> <em>right</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-bottom_005fmargin"></a>Command: <strong>bottom_margin</strong><em> bottom</em></dt>
+<dt id="index-bottom_005fmargin">Command: <strong>bottom_margin</strong> <em>bottom</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-xside_005fmargin"></a>Command: <strong>xside_margin</strong><em> left right</em></dt>
+<dt id="index-xside_005fmargin">Command: <strong>xside_margin</strong> <em>left right</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-yside_005fmargin"></a>Command: <strong>yside_margin</strong><em> top bottom</em></dt>
+<dt id="index-yside_005fmargin">Command: <strong>yside_margin</strong> <em>top bottom</em></dt>
 <dd><p><strong>-id</strong> <em>identifier</em> <br>
 </p></dd></dl>
 
 
 <hr>
-<a name="Index"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Margin" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Margin" title="Previous section in reading order"> &lt; </a>]</td>
-<td valign="middle" align="left">[<a href="#Top" title="Up section"> Up </a>]</td>
-<td valign="middle" align="left">[ &gt; ]</td>
-<td valign="middle" align="left">[ &gt;&gt; ]</td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<a name="Index-1"></a>
-<h1 class="unnumbered">Index</h1>
+<span id="Index"></span><div class="header">
+<p>
+Previous: <a href="#Margin" accesskey="p" rel="prev">Margin</a>, Up: <a href="#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="#Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<span id="Index-1"></span><h2 class="unnumbered">Index</h2>
 
-<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Index-1_fn_letter-B"><b>B</b></a>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Index_fn_letter-B"><b>B</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-D"><b>D</b></a>
+<a class="summary-letter" href="#Index_fn_letter-D"><b>D</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-G"><b>G</b></a>
+<a class="summary-letter" href="#Index_fn_letter-G"><b>G</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-H"><b>H</b></a>
+<a class="summary-letter" href="#Index_fn_letter-H"><b>H</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-I"><b>I</b></a>
+<a class="summary-letter" href="#Index_fn_letter-I"><b>I</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-L"><b>L</b></a>
+<a class="summary-letter" href="#Index_fn_letter-L"><b>L</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-M"><b>M</b></a>
+<a class="summary-letter" href="#Index_fn_letter-M"><b>M</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-R"><b>R</b></a>
+<a class="summary-letter" href="#Index_fn_letter-R"><b>R</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-S"><b>S</b></a>
+<a class="summary-letter" href="#Index_fn_letter-S"><b>S</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-T"><b>T</b></a>
+<a class="summary-letter" href="#Index_fn_letter-T"><b>T</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-V"><b>V</b></a>
+<a class="summary-letter" href="#Index_fn_letter-V"><b>V</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-X"><b>X</b></a>
+<a class="summary-letter" href="#Index_fn_letter-X"><b>X</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-Y"><b>Y</b></a>
+<a class="summary-letter" href="#Index_fn_letter-Y"><b>Y</b></a>
  &nbsp; 
 </td></tr></table>
 <table class="index-fn" border="0">
 <tr><td></td><th align="left">Index Entry</th><td>&nbsp;</td><th align="left"> Section</th></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-B">B</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-basic_005fthumb"><code>basic_thumb</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-basic_005ftrack"><code>basic_track</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-bottom_005fmargin"><code>bottom_margin</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-button"><code>button</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
+<tr><th id="Index_fn_letter-B">B</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-basic_005fthumb"><code>basic_thumb</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-basic_005ftrack"><code>basic_track</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-bottom_005fmargin"><code>bottom_margin</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-button"><code>button</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-D">D</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-deck"><code>deck</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
+<tr><th id="Index_fn_letter-D">D</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-deck"><code>deck</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-G">G</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-gizmo"><code>gizmo</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
+<tr><th id="Index_fn_letter-G">G</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-gizmo"><code>gizmo</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-H">H</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-hgizmo"><code>hgizmo</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-hmax_005fsize"><code>hmax_size</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-hmin_005fsize"><code>hmin_size</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-hsize"><code>hsize</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-htile"><code>htile</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
+<tr><th id="Index_fn_letter-H">H</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-hgizmo"><code>hgizmo</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-hmax_005fsize"><code>hmax_size</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-hmin_005fsize"><code>hmin_size</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-hsize"><code>hsize</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-htile"><code>htile</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-I">I</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-image"><code>image</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
+<tr><th id="Index_fn_letter-I">I</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-image"><code>image</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-L">L</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-layer"><code>layer</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-left_005fmargin"><code>left_margin</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
+<tr><th id="Index_fn_letter-L">L</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-layer"><code>layer</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-left_005fmargin"><code>left_margin</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-M">M</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-max_005fsize"><code>max_size</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-min_005fsize"><code>min_size</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
+<tr><th id="Index_fn_letter-M">M</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-max_005fsize"><code>max_size</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-min_005fsize"><code>min_size</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-R">R</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-right_005fmargin"><code>right_margin</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
+<tr><th id="Index_fn_letter-R">R</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-right_005fmargin"><code>right_margin</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-S">S</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-slider"><code>slider</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-sprite"><code>sprite</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
+<tr><th id="Index_fn_letter-S">S</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-slider"><code>slider</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Controls">Controls</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-sprite"><code>sprite</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-T">T</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-top_005fmargin"><code>top_margin</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
+<tr><th id="Index_fn_letter-T">T</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-top_005fmargin"><code>top_margin</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-V">V</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-vgizmo"><code>vgizmo</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-vsize"><code>vsize</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
-<tr><td></td><td valign="top"><a href="#index-vtile"><code>vtile</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
+<tr><th id="Index_fn_letter-V">V</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-vgizmo"><code>vgizmo</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Image">Image</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-vsize"><code>vsize</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Size">Size</a></td></tr>
+<tr><td></td><td valign="top"><a href="#index-vtile"><code>vtile</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Layout">Layout</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-X">X</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-xside_005fmargin"><code>xside_margin</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
+<tr><th id="Index_fn_letter-X">X</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-xside_005fmargin"><code>xside_margin</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
-<tr><th><a name="Index-1_fn_letter-Y">Y</a></th><td></td><td></td></tr>
-<tr><td></td><td valign="top"><a href="#index-yside_005fmargin"><code>yside_margin</code></a></td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
+<tr><th id="Index_fn_letter-Y">Y</th><td></td><td></td></tr>
+<tr><td></td><td valign="top"><a href="#index-yside_005fmargin"><code>yside_margin</code></a>:</td><td>&nbsp;</td><td valign="top"><a href="#Margin">Margin</a></td></tr>
 <tr><td colspan="4"> <hr></td></tr>
 </table>
-<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Index-1_fn_letter-B"><b>B</b></a>
+<table><tr><th valign="top">Jump to: &nbsp; </th><td><a class="summary-letter" href="#Index_fn_letter-B"><b>B</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-D"><b>D</b></a>
+<a class="summary-letter" href="#Index_fn_letter-D"><b>D</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-G"><b>G</b></a>
+<a class="summary-letter" href="#Index_fn_letter-G"><b>G</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-H"><b>H</b></a>
+<a class="summary-letter" href="#Index_fn_letter-H"><b>H</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-I"><b>I</b></a>
+<a class="summary-letter" href="#Index_fn_letter-I"><b>I</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-L"><b>L</b></a>
+<a class="summary-letter" href="#Index_fn_letter-L"><b>L</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-M"><b>M</b></a>
+<a class="summary-letter" href="#Index_fn_letter-M"><b>M</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-R"><b>R</b></a>
+<a class="summary-letter" href="#Index_fn_letter-R"><b>R</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-S"><b>S</b></a>
+<a class="summary-letter" href="#Index_fn_letter-S"><b>S</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-T"><b>T</b></a>
+<a class="summary-letter" href="#Index_fn_letter-T"><b>T</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-V"><b>V</b></a>
+<a class="summary-letter" href="#Index_fn_letter-V"><b>V</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-X"><b>X</b></a>
+<a class="summary-letter" href="#Index_fn_letter-X"><b>X</b></a>
  &nbsp; 
-<a class="summary-letter" href="#Index-1_fn_letter-Y"><b>Y</b></a>
+<a class="summary-letter" href="#Index_fn_letter-Y"><b>Y</b></a>
  &nbsp; 
 </td></tr></table>
 
-<hr size="6">
-<a name="SEC_About"></a>
-<table class="header" cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[Contents]</td>
-<td valign="middle" align="left">[<a href="#Index" title="Index">Index</a>]</td>
-<td valign="middle" align="left">[<a href="#SEC_About" title="About (help)"> ? </a>]</td>
-</tr></table>
-<h1>About This Document</h1>
-
-<p>
-  This document was generated on <i>July 17, 2020</i> using <a href="http://www.nongnu.org/texi2html/"><i>texi2html 5.0</i></a>.
-</p>
-<p>
-  The buttons in the navigation panels have the following meaning:
-</p>
-<table border="1">
-  <tr>
-    <th> Button </th>
-    <th> Name </th>
-    <th> Go to </th>
-    <th> From 1.2.3 go to</th>
-  </tr>
-  <tr>
-    <td align="center"> [ &lt;&lt; ] </td>
-    <td align="center">FastBack</td>
-    <td>Beginning of this chapter or previous chapter</td>
-    <td>1</td>
-  </tr>
-  <tr>
-    <td align="center"> [ &lt; ] </td>
-    <td align="center">Back</td>
-    <td>Previous section in reading order</td>
-    <td>1.2.2</td>
-  </tr>
-  <tr>
-    <td align="center"> [ Up ] </td>
-    <td align="center">Up</td>
-    <td>Up section</td>
-    <td>1.2</td>
-  </tr>
-  <tr>
-    <td align="center"> [ &gt; ] </td>
-    <td align="center">Forward</td>
-    <td>Next section in reading order</td>
-    <td>1.2.4</td>
-  </tr>
-  <tr>
-    <td align="center"> [ &gt;&gt; ] </td>
-    <td align="center">FastForward</td>
-    <td>Next chapter</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    <td align="center"> [Top] </td>
-    <td align="center">Top</td>
-    <td>Cover (top) of document</td>
-    <td> &nbsp; </td>
-  </tr>
-  <tr>
-    <td align="center"> [Contents] </td>
-    <td align="center">Contents</td>
-    <td>Table of contents</td>
-    <td> &nbsp; </td>
-  </tr>
-  <tr>
-    <td align="center"> [Index] </td>
-    <td align="center">Index</td>
-    <td>Index</td>
-    <td> &nbsp; </td>
-  </tr>
-  <tr>
-    <td align="center"> [ ? ] </td>
-    <td align="center">About</td>
-    <td>About (help)</td>
-    <td> &nbsp; </td>
-  </tr>
-</table>
-
-<p>
-  where the <strong> Example </strong> assumes that the current position is at <strong> Subsubsection One-Two-Three </strong> of a document of the following structure:
-</p>
-
-<ul>
-  <li> 1. Section One
-    <ul>
-      <li>1.1 Subsection One-One
-        <ul>
-          <li>...</li>
-        </ul>
-      </li>
-      <li>1.2 Subsection One-Two
-        <ul>
-          <li>1.2.1 Subsubsection One-Two-One</li>
-          <li>1.2.2 Subsubsection One-Two-Two</li>
-          <li>1.2.3 Subsubsection One-Two-Three &nbsp; &nbsp;
-            <strong>&lt;== Current Position </strong></li>
-          <li>1.2.4 Subsubsection One-Two-Four</li>
-        </ul>
-      </li>
-      <li>1.3 Subsection One-Three
-        <ul>
-          <li>...</li>
-        </ul>
-      </li>
-      <li>1.4 Subsection One-Four</li>
-    </ul>
-  </li>
-</ul>
-
 <hr>
-<p>
- <font size="-1">
-  This document was generated on <i>July 17, 2020</i> using <a href="http://www.nongnu.org/texi2html/"><i>texi2html 5.0</i></a>.
- </font>
- <br>
 
-</p>
+
+
 </body>
 </html>
