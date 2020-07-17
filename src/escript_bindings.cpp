@@ -2,7 +2,9 @@
 #include "escript.hpp"
 #include "dynamic/slider.hpp"
 #include <elements.hpp>
+#include <vector>
 #include <unordered_map>
+#include <string>
 #include <sstream>
 namespace el = cycfi::elements;
 namespace dy = dynamic::elements;
@@ -335,6 +337,50 @@ int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
     Tcl_Obj *result = element_obj_new();
     element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
     elt->element = slider_marks;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+int cmd_slider_labels(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    Tcl_Obj *subject = nullptr;
+    int size = 0;
+    double font_size = 0;
+    Tcl_Obj *labels = nullptr;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    if (parse_objv(interp, info, objc, objv, TCL_ARGV_INT, &size, TCL_ARGV_FLOAT, &font_size, ESCRIPT_ARGV_OBJ, &labels, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"slider_labels: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    if (subject->typePtr != &element_obj_type) {
+        Tcl_SetResult(interp, (char *)"slider_labels: the subject is not of type ELEMENT", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    std::vector<std::string> vec_labels;
+    if (to_string_list(interp, labels, vec_labels) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"slider_labels: invalid list of labels", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    element_obj *elt_subject = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
+
+    auto slider_labels = el::share(dy::slider_labels(el::hold(elt_subject->element), size, font_size));
+    slider_labels->_labels = vec_labels;
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = slider_labels;
     Tcl_InvalidateStringRep(result);
     register_element(interp, id, *elt);
 

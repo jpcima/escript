@@ -52,6 +52,10 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-major_divs} @emph{major_divs} @*
 @end deffn
 
+@deffn Command slider_labels size font_size labels subject
+@strong{-id} @emph{identifier} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Image
 @unnumbered Image

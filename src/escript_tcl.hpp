@@ -1,5 +1,7 @@
 #pragma once
 #include <tcl.h>
+#include <vector>
+#include <string>
 #include <memory>
 #include <cstdarg>
 
@@ -32,6 +34,9 @@ int vparse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj 
 
 ///
 #define ESCRIPT_ARGV_OBJ -1
+
+///
+int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &dst);
 
 ///
 void free_internal_rep(Tcl_Obj *obj);

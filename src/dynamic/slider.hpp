@@ -217,5 +217,55 @@ namespace dynamic { namespace elements {
       return {std::forward<Subject>(subject), _size, _num_divs, _major_divs};
    }
 
+   ////////////////////////////////////////////////////////////////////////////
+   // Slider Labels (You can use this to place slider labels with sliders)
+   ////////////////////////////////////////////////////////////////////////////
+   template <typename Subject>
+   class slider_labels_element
+    : public slider_element_base<Subject>
+   {
+   public:
+
+      using base_type = slider_element_base<Subject>;
+      using string_vector = std::vector<std::string>;
+
+                              slider_labels_element(
+                                 Subject subject
+                               , unsigned size
+                               , float font_size
+                              )
+                               : base_type(std::move(subject), size)
+                               , _font_size(font_size)
+                              {}
+
+      void                    draw(context const& ctx) override;
+
+      string_vector           _labels;
+      float                   _font_size;
+   };
+
+   template <typename Subject>
+   inline void
+   slider_labels_element<Subject>::draw(context const& ctx)
+   {
+      // Draw the subject
+      base_type::draw(ctx);
+
+      // Draw the labels
+      draw_slider_labels(
+         ctx.canvas, ctx.bounds, base_type::_size
+       , _font_size, _labels.data(), _labels.size());
+   }
+
+   template <typename Subject, typename... S>
+   inline slider_labels_element<remove_cvref_t<Subject>>
+   slider_labels(Subject&& subject, unsigned size, float font_size, S&&... s)
+   {
+      auto r = slider_labels_element<remove_cvref_t<Subject>>
+         {std::forward<Subject>(subject), size, font_size};
+      r._labels = {{ std::move(s)... }};
+      return r;
+   }
+
 } // namespace elements
 } // namespace dynamic

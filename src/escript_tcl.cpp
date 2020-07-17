@@ -1,4 +1,6 @@
 #include "escript_tcl.hpp"
+#include <vector>
+#include <string>
 
 namespace escript {
 
@@ -86,6 +88,29 @@ int vparse_objv(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Obj 
     err = vparse_positional_objv(interp, objc, rem, ap);
     if (err != TCL_OK)
         return err;
+
+    return TCL_OK;
+}
+
+///
+int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &dst)
+{
+    int err;
+    unsigned objc = 0;
+    Tcl_Obj **objv = nullptr;
+
+    err = Tcl_ListObjGetElements(interp, obj, (int *)&objc, &objv);
+    if (err != TCL_OK)
+        return err;
+
+    dst.resize(objc);
+
+    for (unsigned i = 0; i < objc; ++i) {
+        const char *str = Tcl_GetString(objv[i]);
+        if (!str)
+            return TCL_ERROR;
+        dst[i].assign(str);
+    }
 
     return TCL_OK;
 }
