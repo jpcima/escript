@@ -15,6 +15,7 @@ This manual is for escript documentation using the Tcl script language.
 * Layout:: Layout commands
 * Size:: Size commands
 * Margin:: Margin commands
+* Align:: Alignment commands
 * Index::  Complete index
 @end menu
 
@@ -109,27 +110,27 @@ This manual is for escript documentation using the Tcl script language.
 @node Size
 @unnumbered Size
 
-@deffn Command hsize width
+@deffn Command hsize width element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command vsize width
+@deffn Command vsize width element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command hmin_size width
+@deffn Command hmin_size width element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command hmax_size width
+@deffn Command hmax_size width element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command min_size width height
+@deffn Command min_size width height element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command max_size width height
+@deffn Command max_size width height element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
@@ -137,30 +138,65 @@ This manual is for escript documentation using the Tcl script language.
 @node Margin
 @unnumbered Margin
 
-@deffn Command left_margin left
+@deffn Command left_margin left element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command top_margin top
+@deffn Command top_margin top element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command right_margin right
+@deffn Command right_margin right element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command bottom_margin bottom
+@deffn Command bottom_margin bottom element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command xside_margin left right
+@deffn Command xside_margin left right element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command yside_margin top bottom
+@deffn Command yside_margin top bottom element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
+@c -----------------------------------------------------------------------------
+@node Align
+@unnumbered Align
+
+@deffn Command halign align element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command align_left element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command align_center element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command align_right element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command valign align element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command align_top element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command align_middle element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command align_bottom element
+@strong{-id} @emph{identifier} @*
+@end deffn
 
 @c -----------------------------------------------------------------------------
 @node Index

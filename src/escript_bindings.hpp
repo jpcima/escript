@@ -33,6 +33,12 @@ int cmd_htile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *con
 int cmd_vtile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_layer(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_deck(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_align_left(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_align_center(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_align_right(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_align_top(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_align_middle(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_align_bottom(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_hsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_vsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_hmin_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
@@ -43,6 +49,8 @@ int cmd_left_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Ob
 int cmd_top_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_right_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_bottom_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_halign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
+int cmd_valign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_min_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);
 int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]);

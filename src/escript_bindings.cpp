@@ -446,6 +446,76 @@ int cmd_deck(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *cons
     return cmd_generic_composite<el::deck_composite>(client_data, interp, objc, objv);
 }
 
+template <class F>
+int cmd_generic_proxy_0m(F &&make, ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id = nullptr;
+    Tcl_Obj *subject = nullptr;
+
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        TCL_ARGV_AUTO_REST, TCL_ARGV_AUTO_HELP, TCL_ARGV_TABLE_END
+    };
+
+    if (parse_objv(interp, info, objc, objv, ESCRIPT_ARGV_OBJ, &subject, 0) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"proxy: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    if (subject->typePtr != &element_obj_type) {
+        Tcl_SetResult(interp, (char *)"proxy: the item is not of type ELEMENT", TCL_STATIC);
+        return TCL_ERROR;
+    }
+
+    element_obj *subject_elt = reinterpret_cast<element_obj *>(subject->internalRep.twoPtrValue.ptr1);
+    auto proxy = el::share(make(el::hold(subject_elt->element)));
+
+    Tcl_Obj *result = element_obj_new();
+    element_obj *elt = reinterpret_cast<element_obj *>(result->internalRep.twoPtrValue.ptr1);
+    elt->element = proxy;
+    Tcl_InvalidateStringRep(result);
+    register_element(interp, id, *elt);
+
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+
+int cmd_align_left(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    auto make = [](el::indirect<el::shared_element<el::element>> subject) { return el::align_left(std::move(subject)); };
+    return cmd_generic_proxy_0m(make, client_data, interp, objc, objv);
+}
+
+int cmd_align_center(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    auto make = [](el::indirect<el::shared_element<el::element>> subject) { return el::align_center(std::move(subject)); };
+    return cmd_generic_proxy_0m(make, client_data, interp, objc, objv);
+}
+
+int cmd_align_right(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    auto make = [](el::indirect<el::shared_element<el::element>> subject) { return el::align_right(std::move(subject)); };
+    return cmd_generic_proxy_0m(make, client_data, interp, objc, objv);
+}
+
+int cmd_align_top(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    auto make = [](el::indirect<el::shared_element<el::element>> subject) { return el::align_top(std::move(subject)); };
+    return cmd_generic_proxy_0m(make, client_data, interp, objc, objv);
+}
+
+int cmd_align_middle(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    auto make = [](el::indirect<el::shared_element<el::element>> subject) { return el::align_middle(std::move(subject)); };
+    return cmd_generic_proxy_0m(make, client_data, interp, objc, objv);
+}
+
+int cmd_align_bottom(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    auto make = [](el::indirect<el::shared_element<el::element>> subject) { return el::align_bottom(std::move(subject)); };
+    return cmd_generic_proxy_0m(make, client_data, interp, objc, objv);
+}
+
 template <class T, class Coord = float>
 int cmd_generic_proxy_1f(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
@@ -529,6 +599,16 @@ int cmd_right_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
 int cmd_bottom_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     return cmd_generic_proxy_1f<el::margin_element<el::bottom_margin_rect, el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_halign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::halign_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
+}
+
+int cmd_valign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    return cmd_generic_proxy_1f<el::valign_element<el::indirect<el::shared_element<el::element>>>>(client_data, interp, objc, objv);
 }
 
 template <class T, class Coord = float>

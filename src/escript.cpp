@@ -26,6 +26,12 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "vtile", &cmd_vtile, this, nullptr);
     Tcl_CreateObjCommand(interp, "layer", &cmd_layer, this, nullptr);
     Tcl_CreateObjCommand(interp, "deck", &cmd_deck, this, nullptr);
+    Tcl_CreateObjCommand(interp, "align_left", &cmd_align_left, this, nullptr);
+    Tcl_CreateObjCommand(interp, "align_center", &cmd_align_center, this, nullptr);
+    Tcl_CreateObjCommand(interp, "align_right", &cmd_align_right, this, nullptr);
+    Tcl_CreateObjCommand(interp, "align_top", &cmd_align_top, this, nullptr);
+    Tcl_CreateObjCommand(interp, "align_middle", &cmd_align_middle, this, nullptr);
+    Tcl_CreateObjCommand(interp, "align_bottom", &cmd_align_bottom, this, nullptr);
     Tcl_CreateObjCommand(interp, "hsize", &cmd_hsize, this, nullptr);
     Tcl_CreateObjCommand(interp, "vsize", &cmd_vsize, this, nullptr);
     Tcl_CreateObjCommand(interp, "hmin_size", &cmd_hmin_size, this, nullptr);
@@ -36,6 +42,8 @@ void script_engine::init()
     Tcl_CreateObjCommand(interp, "top_margin", &cmd_top_margin, this, nullptr);
     Tcl_CreateObjCommand(interp, "right_margin", &cmd_right_margin, this, nullptr);
     Tcl_CreateObjCommand(interp, "bottom_margin", &cmd_bottom_margin, this, nullptr);
+    Tcl_CreateObjCommand(interp, "halign", &cmd_halign, this, nullptr);
+    Tcl_CreateObjCommand(interp, "valign", &cmd_valign, this, nullptr);
     Tcl_CreateObjCommand(interp, "min_size", &cmd_min_size, this, nullptr);
     Tcl_CreateObjCommand(interp, "max_size", &cmd_max_size, this, nullptr);
     Tcl_CreateObjCommand(interp, "xside_margin", &cmd_xside_margin, this, nullptr);
