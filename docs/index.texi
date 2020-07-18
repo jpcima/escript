@@ -158,11 +158,11 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command xside_margin left right element
+@deffn Command xside_margin left_right element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command yside_margin top bottom element
+@deffn Command yside_margin top_bottom element
 @strong{-id} @emph{identifier} @*
 @end deffn
 

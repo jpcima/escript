@@ -82,6 +82,14 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
                     *ctx->err = TCL_ERROR;
                 return 1;
             };
+        case ESCRIPT_ARGV_SIDE_MARGIN:
+            return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
+            {
+                ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
+                if (!obj || to_side_margin(ctx->interp, obj, *(std::array<float, 2> *)dst) != TCL_OK)
+                    *ctx->err = TCL_ERROR;
+                return 1;
+            };
         case ESCRIPT_ARGV_STRING_LIST:
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
@@ -441,6 +449,41 @@ int to_point(Tcl_Interp *interp, Tcl_Obj *obj, cycfi::elements::point &dst)
     }
 
     dst = cycfi::elements::point(values[0], values[1]);
+    return TCL_OK;
+}
+
+int to_side_margin(Tcl_Interp *interp, Tcl_Obj *obj, std::array<float, 2> &dst)
+{
+    int err;
+    unsigned objc = 0;
+    Tcl_Obj **objv = nullptr;
+
+    err = Tcl_ListObjGetElements(interp, obj, (int *)&objc, &objv);
+    if (err != TCL_OK)
+        return err;
+
+    double values[2];
+
+    switch (objc) {
+    case 2:
+        for (unsigned i = 0; i < 2; ++i) {
+            err = Tcl_GetDoubleFromObj(interp, objv[i], &values[i]);
+            if (err != TCL_OK)
+                return err;
+        }
+        break;
+    case 1:
+        err = Tcl_GetDoubleFromObj(interp, objv[0], &values[0]);
+        if (err != TCL_OK)
+            return err;
+        values[1] = values[0];
+        break;
+    default:
+        return TCL_ERROR;
+    }
+
+    dst[0] = values[0];
+    dst[1] = values[1];
     return TCL_OK;
 }
 

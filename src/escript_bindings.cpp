@@ -3,6 +3,7 @@
 #include "dynamic/slider.hpp"
 #include <elements.hpp>
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <string>
 #include <sstream>

@@ -4,6 +4,7 @@
 #include <elements/support/color.hpp>
 #include <infra/string_view.hpp>
 #include <vector>
+#include <array>
 #include <string>
 #include <memory>
 #include <cstdarg>
@@ -52,6 +53,7 @@ enum {
     ESCRIPT_ARGV_ICON_POS,
     ESCRIPT_ARGV_STRING_LIST,
     ESCRIPT_ARGV_POINT,
+    ESCRIPT_ARGV_SIDE_MARGIN,
 
     // n-args, positional only
     ESCRIPT_ARGV_ELEMENT_REST,
@@ -63,6 +65,7 @@ enum {
 ///
 int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &dst);
 int to_point(Tcl_Interp *interp, Tcl_Obj *obj, cycfi::elements::point &dst);
+int to_side_margin(Tcl_Interp *interp, Tcl_Obj *obj, std::array<float, 2> &dst);
 
 ///
 void free_internal_rep(Tcl_Obj *obj);

@@ -283,22 +283,20 @@ elements:
     - name: xside_margin
       kwargs: []
       args:
-          - {name: left, type: float, description: "Left"}
-          - {name: right, type: float, description: "Right"}
+          - {name: left_right, type: side_margin, description: "Left/Right"}
           - {name: subject, type: element, description: "Subject"}
       make:
           |
-              auto element = el::share(el::xside_margin(el::xside_margin_rect(left, right), el::hold(subject->element)));
+              auto element = el::share(el::xside_margin(el::xside_margin_rect(left_right[0], left_right[1]), el::hold(subject->element)));
 
     - name: yside_margin
       kwargs: []
       args:
-          - {name: top, type: float, description: "Top"}
-          - {name: bottom, type: float, description: "Bottom"}
+          - {name: top_bottom, type: side_margin, description: "Top/Bottom"}
           - {name: subject, type: element, description: "Subject"}
       make:
           |
-              auto element = el::share(el::yside_margin(el::yside_margin_rect(top, bottom), el::hold(subject->element)));
+              auto element = el::share(el::yside_margin(el::yside_margin_rect(top_bottom[0], top_bottom[1]), el::hold(subject->element)));
 
     - name: image
       kwargs:

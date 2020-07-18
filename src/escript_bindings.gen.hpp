@@ -614,13 +614,11 @@ static int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
 static int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
-    double left {};
-    double right {};
+    std::array<float, 2> left_right {};
     element_obj * subject {};
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &left, "Left", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &right, "Right", nullptr},
+        {ESCRIPT_ARGV_SIDE_MARGIN, nullptr, nullptr, &left_right, "Left/Right", nullptr},
         {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
         TCL_ARGV_TABLE_END
     };
@@ -628,7 +626,7 @@ static int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc
         Tcl_SetResult(interp, (char *)"xside_margin: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
-    auto element = el::share(el::xside_margin(el::xside_margin_rect(left, right), el::hold(subject->element)));
+    auto element = el::share(el::xside_margin(el::xside_margin_rect(left_right[0], left_right[1]), el::hold(subject->element)));
     Tcl_Obj *result = create_element_result(interp, id, *element);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
@@ -636,13 +634,11 @@ static int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc
 static int cmd_yside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
-    double top {};
-    double bottom {};
+    std::array<float, 2> top_bottom {};
     element_obj * subject {};
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &top, "Top", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &bottom, "Bottom", nullptr},
+        {ESCRIPT_ARGV_SIDE_MARGIN, nullptr, nullptr, &top_bottom, "Top/Bottom", nullptr},
         {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
         TCL_ARGV_TABLE_END
     };
@@ -650,7 +646,7 @@ static int cmd_yside_margin(ClientData client_data, Tcl_Interp *interp, int objc
         Tcl_SetResult(interp, (char *)"yside_margin: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
-    auto element = el::share(el::yside_margin(el::yside_margin_rect(top, bottom), el::hold(subject->element)));
+    auto element = el::share(el::yside_margin(el::yside_margin_rect(top_bottom[0], top_bottom[1]), el::hold(subject->element)));
     Tcl_Obj *result = create_element_result(interp, id, *element);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
