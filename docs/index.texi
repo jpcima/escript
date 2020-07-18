@@ -110,6 +110,10 @@ This manual is for escript documentation using the Tcl script language.
 @node Size
 @unnumbered Size
 
+@deffn Command fixed_size size element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
 @deffn Command hsize width element
 @strong{-id} @emph{identifier} @*
 @end deffn

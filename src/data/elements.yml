@@ -154,6 +154,15 @@ elements:
           |
               auto element = el::share(el::align_bottom(el::hold(subject->element)));
 
+    - name: fixed_size
+      kwargs: []
+      args:
+          - {name: size, type: point, description: "Size"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::fixed_size(size, el::hold(subject->element)));
+
     - name: hsize
       kwargs: []
       args:

@@ -331,6 +331,26 @@ static int cmd_align_bottom(ClientData client_data, Tcl_Interp *interp, int objc
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
+static int cmd_fixed_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    el::point size {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_POINT, nullptr, nullptr, &size, "Size", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"fixed_size: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::fixed_size(size, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
 static int cmd_hsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
@@ -755,6 +775,7 @@ void register_element_commands(Tcl_Interp *interp, ClientData client_data)
     Tcl_CreateObjCommand(interp, "align_top", &cmd_align_top, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "align_middle", &cmd_align_middle, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "align_bottom", &cmd_align_bottom, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "fixed_size", &cmd_fixed_size, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "hsize", &cmd_hsize, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "vsize", &cmd_vsize, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "hmin_size", &cmd_hmin_size, client_data, nullptr);
