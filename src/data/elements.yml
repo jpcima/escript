@@ -256,22 +256,20 @@ elements:
     - name: min_size
       kwargs: []
       args:
-          - {name: width, type: float, description: "Width"}
-          - {name: height, type: float, description: "Height"}
+          - {name: size, type: point, description: "Size"}
           - {name: subject, type: element, description: "Subject"}
       make:
           |
-              auto element = el::share(el::min_size(el::point(width, height), el::hold(subject->element)));
+              auto element = el::share(el::min_size(size, el::hold(subject->element)));
 
     - name: max_size
       kwargs: []
       args:
-          - {name: width, type: float, description: "Width"}
-          - {name: height, type: float, description: "Height"}
+          - {name: size, type: point, description: "Size"}
           - {name: subject, type: element, description: "Subject"}
       make:
           |
-              auto element = el::share(el::max_size(el::point(width, height), el::hold(subject->element)));
+              auto element = el::share(el::max_size(size, el::hold(subject->element)));
 
     - name: xside_margin
       kwargs: []

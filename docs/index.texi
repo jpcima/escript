@@ -126,11 +126,11 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command min_size width height element
+@deffn Command min_size size element
 @strong{-id} @emph{identifier} @*
 @end deffn
 
-@deffn Command max_size width height element
+@deffn Command max_size size element
 @strong{-id} @emph{identifier} @*
 @end deffn
 

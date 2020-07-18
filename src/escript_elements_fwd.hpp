@@ -9,4 +9,6 @@ template <typename T> struct sender;
 class text_reader;
 class text_writer;
 struct color;
+struct point;
+struct rect;
 }}

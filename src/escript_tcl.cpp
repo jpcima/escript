@@ -1,6 +1,7 @@
 #include "escript_tcl.hpp"
 #include "escript_bindings.hpp"
 #include <elements/support/icon_ids.hpp>
+#include <elements/support/point.hpp>
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -71,6 +72,14 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
                     *ctx->err = TCL_ERROR;
                 else
                     *(uint32_t *)dst = i;
+                return 1;
+            };
+        case ESCRIPT_ARGV_POINT:
+            return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
+            {
+                ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
+                if (!obj || to_point(ctx->interp, obj, *(cycfi::elements::point *)dst) != TCL_OK)
+                    *ctx->err = TCL_ERROR;
                 return 1;
             };
         case ESCRIPT_ARGV_STRING_LIST:
@@ -407,6 +416,31 @@ int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &d
         dst[i].assign(str);
     }
 
+    return TCL_OK;
+}
+
+int to_point(Tcl_Interp *interp, Tcl_Obj *obj, cycfi::elements::point &dst)
+{
+    int err;
+    unsigned objc = 0;
+    Tcl_Obj **objv = nullptr;
+
+    err = Tcl_ListObjGetElements(interp, obj, (int *)&objc, &objv);
+    if (err != TCL_OK)
+        return err;
+
+    if (objc != 2)
+        return TCL_ERROR;
+
+    double values[2];
+
+    for (unsigned i = 0; i < 2; ++i) {
+        err = Tcl_GetDoubleFromObj(interp, objv[i], &values[i]);
+        if (err != TCL_OK)
+            return err;
+    }
+
+    dst = cycfi::elements::point(values[0], values[1]);
     return TCL_OK;
 }
 

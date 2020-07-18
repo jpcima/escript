@@ -17,6 +17,7 @@ ctype_of_type = {
     'constant_true': 'int',
     'element': 'element_obj *',
     'string_list': 'std::vector<std::string>',
+    'point': 'el::point',
     'element_rest': 'std::vector<element_obj *>',
 }
 
@@ -30,6 +31,7 @@ argvtype_of_type = {
     'constant_true': 'TCL_ARGV_CONSTANT',
     'element': 'ESCRIPT_ARGV_ELEMENT',
     'string_list': 'ESCRIPT_ARGV_STRING_LIST',
+    'point': 'ESCRIPT_ARGV_POINT',
     'element_rest': 'ESCRIPT_ARGV_ELEMENT_REST',
 }
 

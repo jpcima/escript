@@ -1,4 +1,5 @@
 #pragma once
+#include "escript_elements_fwd.hpp"
 #include <tcl.h>
 #include <elements/support/color.hpp>
 #include <infra/string_view.hpp>
@@ -50,6 +51,7 @@ enum {
     ESCRIPT_ARGV_ICON,
     ESCRIPT_ARGV_ICON_POS,
     ESCRIPT_ARGV_STRING_LIST,
+    ESCRIPT_ARGV_POINT,
 
     // n-args, positional only
     ESCRIPT_ARGV_ELEMENT_REST,
@@ -60,6 +62,7 @@ enum {
 
 ///
 int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &dst);
+int to_point(Tcl_Interp *interp, Tcl_Obj *obj, cycfi::elements::point &dst);
 
 ///
 void free_internal_rep(Tcl_Obj *obj);

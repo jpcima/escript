@@ -554,13 +554,11 @@ static int cmd_valign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
 static int cmd_min_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
-    double width {};
-    double height {};
+    el::point size {};
     element_obj * subject {};
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &width, "Width", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &height, "Height", nullptr},
+        {ESCRIPT_ARGV_POINT, nullptr, nullptr, &size, "Size", nullptr},
         {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
         TCL_ARGV_TABLE_END
     };
@@ -568,7 +566,7 @@ static int cmd_min_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         Tcl_SetResult(interp, (char *)"min_size: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
-    auto element = el::share(el::min_size(el::point(width, height), el::hold(subject->element)));
+    auto element = el::share(el::min_size(size, el::hold(subject->element)));
     Tcl_Obj *result = create_element_result(interp, id, *element);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
@@ -576,13 +574,11 @@ static int cmd_min_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
 static int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
-    double width {};
-    double height {};
+    el::point size {};
     element_obj * subject {};
     const Tcl_ArgvInfo info[] = {
         {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &width, "Width", nullptr},
-        {TCL_ARGV_FLOAT, nullptr, nullptr, &height, "Height", nullptr},
+        {ESCRIPT_ARGV_POINT, nullptr, nullptr, &size, "Size", nullptr},
         {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
         TCL_ARGV_TABLE_END
     };
@@ -590,7 +586,7 @@ static int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         Tcl_SetResult(interp, (char *)"max_size: invalid command arguments", TCL_STATIC);
         return TCL_ERROR;
     }
-    auto element = el::share(el::max_size(el::point(width, height), el::hold(subject->element)));
+    auto element = el::share(el::max_size(size, el::hold(subject->element)));
     Tcl_Obj *result = create_element_result(interp, id, *element);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
