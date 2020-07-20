@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import yaml
+import argparse
 import sys
 import os
 
@@ -105,8 +106,16 @@ def generate_command_registration(doc, stream=sys.stdout):
 ''')
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Generate binding source code.')
+    parser.add_argument('-o', metavar='output-file', help='output file')
+    args = parser.parse_args(sys.argv[1:])
+
+    stream = sys.stdout
+    if args.o is not None:
+        stream = open(args.o, 'w')
+
     doc = yaml.safe_load(open(SOURCE_FILE))
-    generate_start(doc)
+    generate_start(doc, stream)
     for element in doc['elements']:
-        generate_command(element)
-    generate_command_registration(doc)
+        generate_command(element, stream)
+    generate_command_registration(doc, stream)
