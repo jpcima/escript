@@ -53,6 +53,7 @@ enum {
     ESCRIPT_ARGV_ICON_POS,
     ESCRIPT_ARGV_STRING_LIST,
     ESCRIPT_ARGV_POINT,
+    ESCRIPT_ARGV_RECT,
     ESCRIPT_ARGV_SIDE_MARGIN,
 
     // n-args, positional only
@@ -65,6 +66,7 @@ enum {
 ///
 int to_string_list(Tcl_Interp *interp, Tcl_Obj *obj, std::vector<std::string> &dst);
 int to_point(Tcl_Interp *interp, Tcl_Obj *obj, cycfi::elements::point &dst);
+int to_rect(Tcl_Interp *interp, Tcl_Obj *obj, cycfi::elements::rect &dst);
 int to_side_margin(Tcl_Interp *interp, Tcl_Obj *obj, std::array<float, 2> &dst);
 
 ///

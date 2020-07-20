@@ -106,6 +106,10 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-id} @emph{identifier} @*
 @end deffn
 
+@deffn Command floating bounds element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Size
 @unnumbered Size
@@ -173,6 +177,10 @@ This manual is for escript documentation using the Tcl script language.
 @c -----------------------------------------------------------------------------
 @node Margin
 @unnumbered Margin
+
+@deffn Command margin rect element
+@strong{-id} @emph{identifier} @*
+@end deffn
 
 @deffn Command left_margin left element
 @strong{-id} @emph{identifier} @*

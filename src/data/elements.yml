@@ -106,6 +106,15 @@ elements:
               for (element_obj *item : items)
                   element->push_back(item->element);
 
+    - name: floating
+      kwargs: []
+      args:
+          - {name: bounds, type: rect, description: "Bounds"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::floating(bounds, el::hold(subject->element)));
+
     - name: align_left
       kwargs: []
       args:
@@ -207,6 +216,15 @@ elements:
       make:
           |
               auto element = el::share(el::hmax_size(width, el::hold(subject->element)));
+
+    - name: margin
+      kwargs: []
+      args:
+          - {name: rect, type: rect, description: "Margin"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::margin(rect, el::hold(subject->element)));
 
     - name: left_margin
       kwargs: []

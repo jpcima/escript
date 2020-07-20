@@ -19,6 +19,7 @@ ctype_of_type = {
     'element': 'element_obj *',
     'string_list': 'std::vector<std::string>',
     'point': 'el::point',
+    'rect': 'el::rect',
     'side_margin': 'std::array<float, 2>',
     'element_rest': 'std::vector<element_obj *>',
 }
@@ -34,6 +35,7 @@ argvtype_of_type = {
     'element': 'ESCRIPT_ARGV_ELEMENT',
     'string_list': 'ESCRIPT_ARGV_STRING_LIST',
     'point': 'ESCRIPT_ARGV_POINT',
+    'rect': 'ESCRIPT_ARGV_RECT',
     'side_margin': 'ESCRIPT_ARGV_SIDE_MARGIN',
     'element_rest': 'ESCRIPT_ARGV_ELEMENT_REST',
 }

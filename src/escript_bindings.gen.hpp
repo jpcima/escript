@@ -223,6 +223,26 @@ for (element_obj *item : items)
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
+static int cmd_floating(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    el::rect bounds {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_RECT, nullptr, nullptr, &bounds, "Bounds", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"floating: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::floating(bounds, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
 static int cmd_align_left(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
@@ -447,6 +467,26 @@ static int cmd_hmax_size(ClientData client_data, Tcl_Interp *interp, int objc, T
         return TCL_ERROR;
     }
     auto element = el::share(el::hmax_size(width, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    el::rect rect {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_RECT, nullptr, nullptr, &rect, "Margin", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"margin: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::margin(rect, el::hold(subject->element)));
     Tcl_Obj *result = create_element_result(interp, id, *element);
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
@@ -919,6 +959,7 @@ void register_element_commands(Tcl_Interp *interp, ClientData client_data)
     Tcl_CreateObjCommand(interp, "vtile", &cmd_vtile, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "layer", &cmd_layer, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "deck", &cmd_deck, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "floating", &cmd_floating, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "align_left", &cmd_align_left, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "align_center", &cmd_align_center, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "align_right", &cmd_align_right, client_data, nullptr);
@@ -931,6 +972,7 @@ void register_element_commands(Tcl_Interp *interp, ClientData client_data)
     Tcl_CreateObjCommand(interp, "hmin_size", &cmd_hmin_size, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "vmin_size", &cmd_vmin_size, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "hmax_size", &cmd_hmax_size, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "margin", &cmd_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "left_margin", &cmd_left_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "top_margin", &cmd_top_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "right_margin", &cmd_right_margin, client_data, nullptr);
