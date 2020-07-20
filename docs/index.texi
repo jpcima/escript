@@ -138,6 +138,34 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-id} @emph{identifier} @*
 @end deffn
 
+@deffn Command hstretch stretch element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command vstretch stretch element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command no_hstretch element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command no_vstretch element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command hcollapsible element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command vcollapsible element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
+@deffn Command scale factor element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Margin
 @unnumbered Margin

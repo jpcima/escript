@@ -280,6 +280,65 @@ elements:
           |
               auto element = el::share(el::max_size(size, el::hold(subject->element)));
 
+    - name: hstretch
+      kwargs: []
+      args:
+          - {name: stretch, type: float, description: "Stretch"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::hstretch(stretch, el::hold(subject->element)));
+
+    - name: vstretch
+      kwargs: []
+      args:
+          - {name: stretch, type: float, description: "Stretch"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::vstretch(stretch, el::hold(subject->element)));
+
+    - name: no_hstretch
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::no_hstretch(el::hold(subject->element)));
+
+    - name: no_vstretch
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::no_vstretch(el::hold(subject->element)));
+
+    - name: hcollapsible
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::hcollapsible(el::hold(subject->element)));
+
+    - name: vcollapsible
+      kwargs: []
+      args:
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::vcollapsible(el::hold(subject->element)));
+
+    - name: scale
+      kwargs: []
+      args:
+          - {name: factor, type: float, description: "Scale factor"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::scale(factor, el::hold(subject->element)));
+
     - name: xside_margin
       kwargs: []
       args:

@@ -611,6 +611,138 @@ static int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
+static int cmd_hstretch(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    double stretch {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &stretch, "Stretch", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"hstretch: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::hstretch(stretch, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_vstretch(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    double stretch {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &stretch, "Stretch", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"vstretch: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::vstretch(stretch, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_no_hstretch(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"no_hstretch: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::no_hstretch(el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_no_vstretch(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"no_vstretch: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::no_vstretch(el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_hcollapsible(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"hcollapsible: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::hcollapsible(el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_vcollapsible(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"vcollapsible: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::vcollapsible(el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
+static int cmd_scale(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    double factor {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {TCL_ARGV_FLOAT, nullptr, nullptr, &factor, "Scale factor", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"scale: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::scale(factor, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
 static int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
@@ -785,6 +917,13 @@ void register_element_commands(Tcl_Interp *interp, ClientData client_data)
     Tcl_CreateObjCommand(interp, "valign", &cmd_valign, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "min_size", &cmd_min_size, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "max_size", &cmd_max_size, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "hstretch", &cmd_hstretch, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "vstretch", &cmd_vstretch, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "no_hstretch", &cmd_no_hstretch, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "no_vstretch", &cmd_no_vstretch, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "hcollapsible", &cmd_hcollapsible, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "vcollapsible", &cmd_vcollapsible, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "scale", &cmd_scale, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "xside_margin", &cmd_xside_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "yside_margin", &cmd_yside_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "image", &cmd_image, client_data, nullptr);
