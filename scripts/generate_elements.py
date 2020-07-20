@@ -83,7 +83,10 @@ def generate_command(element, stream=sys.stdout):
     stream.write('''        TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"%s: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "%s: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     ''' % (element['name']))

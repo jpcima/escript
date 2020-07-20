@@ -6,7 +6,9 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <sstream>
 #include <limits>
+#include <stdexcept>
 #include <cstdlib>
 
 namespace escript {
@@ -14,7 +16,16 @@ namespace escript {
 struct ArgvFuncContext {
     Tcl_Interp *interp;
     int *err;
+    std::string msg;
 };
+
+static std::string msg_invalid_argument(Tcl_Obj *obj, const char *type)
+{
+    const char *obj_str = obj ? Tcl_GetString(obj) : nullptr;
+    std::ostringstream os;
+    os << "Invalid value \"" << (obj_str ? obj_str : "(nil)") << "\" for type " << type;
+    return os.str();
+}
 
 static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
 {
@@ -23,8 +34,10 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
-                if (!obj)
+                if (!obj) {
+                    ctx->msg = msg_invalid_argument(obj, "OBJECT");
                     *ctx->err = TCL_ERROR;
+                }
                 else
                     *(Tcl_Obj **)dst = obj;
                 return 1;
@@ -33,8 +46,10 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
-                if (!obj || obj->typePtr != &element_obj_type)
+                if (!obj || obj->typePtr != &element_obj_type) {
+                    ctx->msg = msg_invalid_argument(obj, "ELEMENT");
                     *ctx->err = TCL_ERROR;
+                }
                 else
                     *(element_obj **)dst = (element_obj *)obj->internalRep.twoPtrValue.ptr1;
                 return 1;
@@ -45,8 +60,10 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
                 const char *str = obj ? Tcl_GetString(obj) : nullptr;
                 cycfi::elements::color c;
-                if (!str || !parse_color(str, c))
+                if (!str || !parse_color(str, c)) {
+                    ctx->msg = msg_invalid_argument(obj, "COLOR");
                     *ctx->err = TCL_ERROR;
+                }
                 else
                     *(cycfi::elements::color *)dst = c;
                 return 1;
@@ -57,8 +74,10 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
                 const char *str = obj ? Tcl_GetString(obj) : nullptr;
                 uint32_t i;
-                if (!str || !parse_icon(str, i))
+                if (!str || !parse_icon(str, i)) {
+                    ctx->msg = msg_invalid_argument(obj, "ICON");
                     *ctx->err = TCL_ERROR;
+                }
                 else
                     *(uint32_t *)dst = i;
                 return 1;
@@ -69,8 +88,10 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
                 const char *str = obj ? Tcl_GetString(obj) : nullptr;
                 uint32_t i;
-                if (!str || !parse_icon_pos(str, i))
+                if (!str || !parse_icon_pos(str, i)) {
+                    ctx->msg = msg_invalid_argument(obj, "ICON-POS");
                     *ctx->err = TCL_ERROR;
+                }
                 else
                     *(uint32_t *)dst = i;
                 return 1;
@@ -79,32 +100,40 @@ static Tcl_ArgvFuncProc *argv_func_proc_ex(int type)
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
-                if (!obj || to_point(ctx->interp, obj, *(cycfi::elements::point *)dst) != TCL_OK)
+                if (!obj || to_point(ctx->interp, obj, *(cycfi::elements::point *)dst) != TCL_OK) {
+                    ctx->msg = msg_invalid_argument(obj, "POINT");
                     *ctx->err = TCL_ERROR;
+                }
                 return 1;
             };
         case ESCRIPT_ARGV_RECT:
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
-                if (!obj || to_rect(ctx->interp, obj, *(cycfi::elements::rect *)dst) != TCL_OK)
+                if (!obj || to_rect(ctx->interp, obj, *(cycfi::elements::rect *)dst) != TCL_OK) {
+                    ctx->msg = msg_invalid_argument(obj, "RECT");
                     *ctx->err = TCL_ERROR;
+                }
                 return 1;
             };
         case ESCRIPT_ARGV_SIDE_MARGIN:
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
-                if (!obj || to_side_margin(ctx->interp, obj, *(std::array<float, 2> *)dst) != TCL_OK)
+                if (!obj || to_side_margin(ctx->interp, obj, *(std::array<float, 2> *)dst) != TCL_OK) {
+                    ctx->msg = msg_invalid_argument(obj, "ELEMENT");
                     *ctx->err = TCL_ERROR;
+                }
                 return 1;
             };
         case ESCRIPT_ARGV_STRING_LIST:
             return [](ClientData cd, Tcl_Obj *obj, void *dst) -> int
             {
                 ArgvFuncContext *ctx = (ArgvFuncContext *)cd;
-                if (!obj || to_string_list(ctx->interp, obj, *(std::vector<std::string> *)dst) != TCL_OK)
+                if (!obj || to_string_list(ctx->interp, obj, *(std::vector<std::string> *)dst) != TCL_OK) {
+                    ctx->msg = msg_invalid_argument(obj, "STRING-LIST");
                     *ctx->err = TCL_ERROR;
+                }
                 return 1;
             };
     }
@@ -118,13 +147,13 @@ static Tcl_ArgvGenFuncProc *argv_genfunc_proc_ex(int type)
         case ESCRIPT_ARGV_ELEMENT_REST:
             return [](ClientData cd, Tcl_Interp *interp, int objc, Tcl_Obj *const *objv, void *dst) -> int
             {
-                if (objc < 1)
-                    return -1;
                 std::vector<element_obj *> &list = *(std::vector<element_obj *> *)dst;
                 list.resize(objc);
-                for (unsigned i = 0; i < objc; ++i) {
-                    if (objv[i]->typePtr != &element_obj_type)
+                for (unsigned i = 0; i < (unsigned)objc; ++i) {
+                    if (objv[i]->typePtr != &element_obj_type) {
+                        Tcl_SetResult(interp, (char *)msg_invalid_argument(objv[i], "ELEMENT").c_str(), TCL_VOLATILE);
                         return -1;
+                    }
                     list[i] = (element_obj *)objv[i]->internalRep.twoPtrValue.ptr1;
                 }
                 return 0;
@@ -161,7 +190,7 @@ int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Ob
         if (info[i].type >= ESCRIPT_ARGV_FIRST && info[i].type <= ESCRIPT_ARGV_LAST) {
             Tcl_ArgvFuncProc *proc = argv_func_proc_ex(current.type);
             if (!proc)
-                return TCL_ERROR;
+                throw std::runtime_error("No available conversion for the argument");
             current.type = TCL_ARGV_FUNC;
             current.srcPtr = (void *)proc;
             current.clientData = (ClientData)&argv_func_ctx;
@@ -177,8 +206,10 @@ int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Ob
         return TCL_ERROR;
     ck_u rem_cleanup(rem);
     // check if one of the func conversions has failed
-    if (argv_func_err != TCL_OK)
+    if (argv_func_err != TCL_OK) {
+        Tcl_SetResult(interp, (char *)argv_func_ctx.msg.c_str(), TCL_VOLATILE);
         return TCL_ERROR;
+    }
 
     // do the rest as positional args
     objv = rem + 1;
@@ -193,8 +224,11 @@ int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Ob
         case TCL_ARGV_STRING:
             {
                 const char *str = nullptr;
-                if (objc < 1 || !(str = Tcl_GetString(objv[0])))
+                Tcl_Obj *obj = (objc > 0) ? objv[0] : nullptr;
+                if (!obj || !(str = Tcl_GetString(objv[0]))) {
+                    Tcl_SetResult(interp, (char *)msg_invalid_argument(obj, "STRING").c_str(), TCL_VOLATILE);
                     return TCL_ERROR;
+                }
                 *(const char **)current.dstPtr = str;
                 ++objv;
                 --objc;
@@ -203,8 +237,11 @@ int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Ob
         case TCL_ARGV_INT:
             {
                 int val = 0;
-                if (objc < 1 || Tcl_GetIntFromObj(interp, objv[0], &val) != TCL_OK)
+                Tcl_Obj *obj = (objc > 0) ? objv[0] : nullptr;
+                if (!obj || Tcl_GetIntFromObj(interp, objv[0], &val) != TCL_OK) {
+                    Tcl_SetResult(interp, (char *)msg_invalid_argument(obj, "INT").c_str(), TCL_VOLATILE);
                     return TCL_ERROR;
+                }
                 *(int *)current.dstPtr = val;
                 ++objv;
                 --objc;
@@ -213,8 +250,11 @@ int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Ob
         case TCL_ARGV_FLOAT:
             {
                 double val = 0;
-                if (objc < 1 || Tcl_GetDoubleFromObj(interp, objv[0], &val) != TCL_OK)
+                Tcl_Obj *obj = (objc > 0) ? objv[0] : nullptr;
+                if (!obj || Tcl_GetDoubleFromObj(interp, objv[0], &val) != TCL_OK) {
+                    Tcl_SetResult(interp, (char *)msg_invalid_argument(obj, "FLOAT").c_str(), TCL_VOLATILE);
                     return TCL_ERROR;
+                }
                 *(double *)current.dstPtr = val;
                 ++objv;
                 --objc;
@@ -245,15 +285,17 @@ int parse_objv_ex(Tcl_Interp *interp, const Tcl_ArgvInfo *info, int objc, Tcl_Ob
                     objc -= n;
                 }
                 else {
-                    return TCL_ERROR;
+                    throw std::runtime_error("No available conversion for the argument");
                 }
             }
             break;
         }
     }
 
-    if (objc > 0)
+    if (objc > 0) {
+        Tcl_SetResult(interp, (char *)"too many positional arguments", TCL_STATIC);
         return TCL_ERROR;
+    }
 
     return TCL_OK;
 }

@@ -19,7 +19,10 @@ static int cmd_button(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"button: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "button: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element =
@@ -42,7 +45,10 @@ static int cmd_basic_thumb(ClientData client_data, Tcl_Interp *interp, int objc,
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"basic_thumb: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "basic_thumb: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(dy::basic_thumb(size, color));
@@ -64,7 +70,10 @@ static int cmd_basic_track(ClientData client_data, Tcl_Interp *interp, int objc,
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"basic_track: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "basic_track: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(dy::basic_track(size, vertical, color));
@@ -86,7 +95,10 @@ static int cmd_slider(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"slider: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "slider: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::slider(el::hold(thumb->element), el::hold(track->element), init_value));
@@ -110,7 +122,10 @@ static int cmd_slider_marks(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"slider_marks: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "slider_marks: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(dy::slider_marks(el::hold(subject->element), size, num_divs, major_divs));
@@ -134,7 +149,10 @@ static int cmd_slider_labels(ClientData client_data, Tcl_Interp *interp, int obj
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"slider_labels: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "slider_labels: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(dy::slider_labels(el::hold(subject->element), size, font_size));
@@ -153,7 +171,10 @@ static int cmd_htile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"htile: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "htile: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::htile_composite());
@@ -173,7 +194,10 @@ static int cmd_vtile(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"vtile: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "vtile: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::vtile_composite());
@@ -193,7 +217,10 @@ static int cmd_layer(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"layer: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "layer: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::layer_composite());
@@ -213,7 +240,10 @@ static int cmd_deck(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Ob
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"deck: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "deck: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::deck_composite());
@@ -235,7 +265,10 @@ static int cmd_floating(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"floating: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "floating: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::floating(bounds, el::hold(subject->element)));
@@ -253,7 +286,10 @@ static int cmd_align_left(ClientData client_data, Tcl_Interp *interp, int objc, 
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"align_left: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "align_left: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::align_left(el::hold(subject->element)));
@@ -271,7 +307,10 @@ static int cmd_align_center(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"align_center: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "align_center: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::align_center(el::hold(subject->element)));
@@ -289,7 +328,10 @@ static int cmd_align_right(ClientData client_data, Tcl_Interp *interp, int objc,
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"align_right: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "align_right: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::align_right(el::hold(subject->element)));
@@ -307,7 +349,10 @@ static int cmd_align_top(ClientData client_data, Tcl_Interp *interp, int objc, T
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"align_top: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "align_top: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::align_top(el::hold(subject->element)));
@@ -325,7 +370,10 @@ static int cmd_align_middle(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"align_middle: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "align_middle: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::align_middle(el::hold(subject->element)));
@@ -343,7 +391,10 @@ static int cmd_align_bottom(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"align_bottom: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "align_bottom: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::align_bottom(el::hold(subject->element)));
@@ -363,7 +414,10 @@ static int cmd_fixed_size(ClientData client_data, Tcl_Interp *interp, int objc, 
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"fixed_size: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "fixed_size: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::fixed_size(size, el::hold(subject->element)));
@@ -383,7 +437,10 @@ static int cmd_hsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"hsize: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "hsize: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::hsize(width, el::hold(subject->element)));
@@ -403,7 +460,10 @@ static int cmd_vsize(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"vsize: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "vsize: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::vsize(height, el::hold(subject->element)));
@@ -423,7 +483,10 @@ static int cmd_hmin_size(ClientData client_data, Tcl_Interp *interp, int objc, T
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"hmin_size: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "hmin_size: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::hmin_size(width, el::hold(subject->element)));
@@ -443,7 +506,10 @@ static int cmd_vmin_size(ClientData client_data, Tcl_Interp *interp, int objc, T
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"vmin_size: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "vmin_size: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::vmin_size(height, el::hold(subject->element)));
@@ -463,7 +529,10 @@ static int cmd_hmax_size(ClientData client_data, Tcl_Interp *interp, int objc, T
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"hmax_size: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "hmax_size: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::hmax_size(width, el::hold(subject->element)));
@@ -483,7 +552,10 @@ static int cmd_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::margin(rect, el::hold(subject->element)));
@@ -503,7 +575,10 @@ static int cmd_left_margin(ClientData client_data, Tcl_Interp *interp, int objc,
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"left_margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "left_margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::left_margin(size, el::hold(subject->element)));
@@ -523,7 +598,10 @@ static int cmd_top_margin(ClientData client_data, Tcl_Interp *interp, int objc, 
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"top_margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "top_margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::top_margin(size, el::hold(subject->element)));
@@ -543,7 +621,10 @@ static int cmd_right_margin(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"right_margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "right_margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::right_margin(size, el::hold(subject->element)));
@@ -563,7 +644,10 @@ static int cmd_bottom_margin(ClientData client_data, Tcl_Interp *interp, int obj
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"bottom_margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "bottom_margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::bottom_margin(size, el::hold(subject->element)));
@@ -583,7 +667,10 @@ static int cmd_halign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"halign: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "halign: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::halign(align, el::hold(subject->element)));
@@ -603,7 +690,10 @@ static int cmd_valign(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"valign: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "valign: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::valign(align, el::hold(subject->element)));
@@ -623,7 +713,10 @@ static int cmd_min_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"min_size: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "min_size: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::min_size(size, el::hold(subject->element)));
@@ -643,7 +736,10 @@ static int cmd_max_size(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"max_size: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "max_size: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::max_size(size, el::hold(subject->element)));
@@ -663,7 +759,10 @@ static int cmd_hstretch(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"hstretch: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "hstretch: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::hstretch(stretch, el::hold(subject->element)));
@@ -683,7 +782,10 @@ static int cmd_vstretch(ClientData client_data, Tcl_Interp *interp, int objc, Tc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"vstretch: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "vstretch: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::vstretch(stretch, el::hold(subject->element)));
@@ -701,7 +803,10 @@ static int cmd_no_hstretch(ClientData client_data, Tcl_Interp *interp, int objc,
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"no_hstretch: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "no_hstretch: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::no_hstretch(el::hold(subject->element)));
@@ -719,7 +824,10 @@ static int cmd_no_vstretch(ClientData client_data, Tcl_Interp *interp, int objc,
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"no_vstretch: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "no_vstretch: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::no_vstretch(el::hold(subject->element)));
@@ -737,7 +845,10 @@ static int cmd_hcollapsible(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"hcollapsible: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "hcollapsible: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::hcollapsible(el::hold(subject->element)));
@@ -755,7 +866,10 @@ static int cmd_vcollapsible(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"vcollapsible: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "vcollapsible: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::vcollapsible(el::hold(subject->element)));
@@ -775,7 +889,10 @@ static int cmd_scale(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"scale: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "scale: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::scale(factor, el::hold(subject->element)));
@@ -797,7 +914,10 @@ static int cmd_limits(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"limits: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "limits: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::limit(el::view_limits{min, max}, el::hold(subject->element)));
@@ -817,7 +937,10 @@ static int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"xside_margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "xside_margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::xside_margin(el::xside_margin_rect(left_right[0], left_right[1]), el::hold(subject->element)));
@@ -837,7 +960,10 @@ static int cmd_yside_margin(ClientData client_data, Tcl_Interp *interp, int objc
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"yside_margin: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "yside_margin: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::yside_margin(el::yside_margin_rect(top_bottom[0], top_bottom[1]), el::hold(subject->element)));
@@ -857,7 +983,10 @@ static int cmd_image(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"image: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "image: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::image(filename, scale));
@@ -877,7 +1006,10 @@ static int cmd_gizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"gizmo: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "gizmo: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::gizmo(filename, scale));
@@ -897,7 +1029,10 @@ static int cmd_hgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"hgizmo: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "hgizmo: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::hgizmo(filename, scale));
@@ -917,7 +1052,10 @@ static int cmd_vgizmo(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"vgizmo: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "vgizmo: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::vgizmo(filename, scale));
@@ -939,7 +1077,10 @@ static int cmd_sprite(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_
         TCL_ARGV_TABLE_END
     };
     if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
-        Tcl_SetResult(interp, (char *)"sprite: invalid command arguments", TCL_STATIC);
+        const char *msgp = Tcl_GetStringResult(interp);
+        const std::string msg = msgp ? msgp : "unknown error";
+        Tcl_ResetResult(interp);
+        Tcl_AppendResult(interp, "sprite: ", msg.c_str(), nullptr);
         return TCL_ERROR;
     }
     auto element = el::share(el::sprite(filename, height, scale));
