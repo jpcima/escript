@@ -315,6 +315,9 @@ bool parse_color(cycfi::string_view name, cycfi::elements::color &color)
     name = name.substr(1);
     size_t length = name.size();
 
+    if (length != 6 && length != 8)
+        return false;
+
     uint32_t rgba = 0;
     if (length == 6 || length == 8) {
         for (size_t i = 0; i < length; ++i) {
