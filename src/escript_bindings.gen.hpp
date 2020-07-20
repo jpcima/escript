@@ -743,6 +743,28 @@ static int cmd_scale(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_O
     Tcl_SetObjResult(interp, result);
     return TCL_OK;
 }
+static int cmd_limits(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
+{
+    const char *id {};
+    el::point min {};
+    el::point max {};
+    element_obj * subject {};
+    const Tcl_ArgvInfo info[] = {
+        {TCL_ARGV_STRING, "-id", nullptr, &id, "Identifier", nullptr},
+        {ESCRIPT_ARGV_POINT, nullptr, nullptr, &min, "Minimum", nullptr},
+        {ESCRIPT_ARGV_POINT, nullptr, nullptr, &max, "Maximum", nullptr},
+        {ESCRIPT_ARGV_ELEMENT, nullptr, nullptr, &subject, "Subject", nullptr},
+        TCL_ARGV_TABLE_END
+    };
+    if (parse_objv_ex(interp, info, objc, objv) != TCL_OK) {
+        Tcl_SetResult(interp, (char *)"limits: invalid command arguments", TCL_STATIC);
+        return TCL_ERROR;
+    }
+    auto element = el::share(el::limit(el::view_limits{min, max}, el::hold(subject->element)));
+    Tcl_Obj *result = create_element_result(interp, id, *element);
+    Tcl_SetObjResult(interp, result);
+    return TCL_OK;
+}
 static int cmd_xside_margin(ClientData client_data, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
     const char *id {};
@@ -924,6 +946,7 @@ void register_element_commands(Tcl_Interp *interp, ClientData client_data)
     Tcl_CreateObjCommand(interp, "hcollapsible", &cmd_hcollapsible, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "vcollapsible", &cmd_vcollapsible, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "scale", &cmd_scale, client_data, nullptr);
+    Tcl_CreateObjCommand(interp, "limits", &cmd_limits, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "xside_margin", &cmd_xside_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "yside_margin", &cmd_yside_margin, client_data, nullptr);
     Tcl_CreateObjCommand(interp, "image", &cmd_image, client_data, nullptr);

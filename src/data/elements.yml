@@ -339,6 +339,16 @@ elements:
           |
               auto element = el::share(el::scale(factor, el::hold(subject->element)));
 
+    - name: limits
+      kwargs: []
+      args:
+          - {name: min, type: point, description: "Minimum"}
+          - {name: max, type: point, description: "Maximum"}
+          - {name: subject, type: element, description: "Subject"}
+      make:
+          |
+              auto element = el::share(el::limit(el::view_limits{min, max}, el::hold(subject->element)));
+
     - name: xside_margin
       kwargs: []
       args:

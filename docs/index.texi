@@ -166,6 +166,10 @@ This manual is for escript documentation using the Tcl script language.
 @strong{-id} @emph{identifier} @*
 @end deffn
 
+@deffn Command limit min max element
+@strong{-id} @emph{identifier} @*
+@end deffn
+
 @c -----------------------------------------------------------------------------
 @node Margin
 @unnumbered Margin
